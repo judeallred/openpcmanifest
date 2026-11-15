@@ -1,0 +1,18 @@
+VERIFICATION
+Verification is intended to assist the Chocolatey moderators and community
+in verifying that this package's contents are trustworthy.
+
+This package embeds openpcmanifest.exe version __VERSION__, built by the
+project's GitHub Actions release workflow and published at:
+
+  https://github.com/judeallred/openpcmanifest/releases/tag/v__VERSION__
+
+To verify, download openpcmanifest-__VERSION__-windows-x64.exe from that page
+and compare its SHA-256 checksum with tools\openpcmanifest.exe:
+
+  Get-FileHash .\openpcmanifest-__VERSION__-windows-x64.exe -Algorithm SHA256
+
+Expected SHA-256: __SHA256__
+
+The release page also lists every checksum in SHA256SUMS.txt.
+The software is MIT licensed; see legal\LICENSE.txt.

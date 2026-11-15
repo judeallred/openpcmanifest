@@ -1,0 +1,125 @@
+name: Release
+
+# Runs when a version tag such as v0.1.0 is pushed. Builds, packages and
+# publishes the GitHub release. Package-manager publishing (crates.io, winget,
+# Chocolatey) is switched off until v1.0: set the repository variable
+# PUBLISH_PACKAGES to "true" to turn it on. See docs/RELEASING.md.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: windows-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show active-toolchain || rustup toolchain install
+
+      - name: Check the tag matches Cargo.toml
+        id: version
+        shell: pwsh
+        run: |
+          $version = (cargo metadata --no-deps --format-version 1 | ConvertFrom-Json).packages[0].version
+          if ("v$version" -ne '${{ github.ref_name }}') {
+            Write-Error "Tag ${{ github.ref_name }} does not match Cargo.toml version $version"
+            exit 1
+          }
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Test
+        run: cargo test --all-features
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Package
+        shell: pwsh
+        run: |
+          $v = '${{ steps.version.outputs.version }}'
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Copy-Item target/release/openpcmanifest.exe dist/
+          Copy-Item LICENSE, README.md, CHANGELOG.md dist/
+          Compress-Archive -Path dist/* -DestinationPath "openpcmanifest-$v-windows-x64.zip" -Force
+          Copy-Item target/release/openpcmanifest.exe "openpcmanifest-$v-windows-x64.exe"
+          Get-ChildItem "openpcmanifest-$v-*" | ForEach-Object {
+            "$((Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower())  $($_.Name)"
+          } | Set-Content -Encoding ascii SHA256SUMS.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-files
+          path: |
+            openpcmanifest-*-windows-x64.zip
+            openpcmanifest-*-windows-x64.exe
+            SHA256SUMS.txt
+
+      - name: Create the GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $v = '${{ steps.version.outputs.version }}'
+          gh release create '${{ github.ref_name }}' `
+            --title "OpenPCManifest $v" `
+            --generate-notes `
+            "openpcmanifest-$v-windows-x64.zip" "openpcmanifest-$v-windows-x64.exe" SHA256SUMS.txt
+
+  crates-io:
+    needs: build
+    if: vars.PUBLISH_PACKAGES == 'true'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show active-toolchain || rustup toolchain install
+      - run: cargo publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+  winget:
+    needs: build
+    if: vars.PUBLISH_PACKAGES == 'true'
+    runs-on: windows-latest
+    steps:
+      # Updates an existing winget package. The first version must be
+      # submitted by hand; see docs/RELEASING.md.
+      - uses: vedantmgoyal9/winget-releaser@main
+        with:
+          identifier: JudeAllred.OpenPCManifest
+          installers-regex: '-windows-x64\.zip$'
+          token: ${{ secrets.WINGET_TOKEN }}
+
+  chocolatey:
+    needs: build
+    if: vars.PUBLISH_PACKAGES == 'true'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-files
+      - name: Pack and push
+        shell: pwsh
+        env:
+          CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
+        run: |
+          $v = '${{ needs.build.outputs.version }}'
+          $pkg = 'packaging/chocolatey'
+          Copy-Item "openpcmanifest-$v-windows-x64.exe" "$pkg/tools/openpcmanifest.exe"
+          Copy-Item LICENSE "$pkg/legal/LICENSE.txt"
+          $hash = (Get-FileHash "$pkg/tools/openpcmanifest.exe" -Algorithm SHA256).Hash
+          (Get-Content "$pkg/legal/VERIFICATION.txt") `
+            -replace '__VERSION__', $v -replace '__SHA256__', $hash |
+            Set-Content "$pkg/legal/VERIFICATION.txt"
+          (Get-Content "$pkg/openpcmanifest.nuspec") -replace '__VERSION__', $v |
+            Set-Content "$pkg/openpcmanifest.nuspec"
+          choco pack "$pkg/openpcmanifest.nuspec" --outputdirectory .
+          choco push "openpcmanifest.$v.nupkg" --source https://push.chocolatey.org/ --api-key $env:CHOCO_API_KEY

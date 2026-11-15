@@ -1,0 +1,753 @@
+{
+ "schema": 1,
+ "collectedAt": "2026-11-15T19:04:44.0000000Z",
+ "isAdmin": true,
+ "psVersion": "5.1.26100.7019",
+ "generator": "OpenPCManifest 0.1.0 (fixture)",
+ "os": [
+  {
+   "Caption": "Microsoft Windows 11 Pro",
+   "Version": "10.0.26100",
+   "BuildNumber": "26100",
+   "OSArchitecture": "64-bit",
+   "SerialNumber": "00330-80000-00000-AA000",
+   "RegisteredUser": "example-user",
+   "CSName": "EXAMPLE-PC",
+   "Locale": "0409",
+   "ProductType": 1,
+   "TotalVisibleMemorySize": 50253012,
+   "FreePhysicalMemory": 34600000,
+   "TotalVirtualMemorySize": 60800000,
+   "FreeVirtualMemory": 43000000,
+   "InstallDate": "2024-12-30T00:06:16.0000000Z",
+   "LastBootUpTime": "2026-11-15T17:27:03.0000000Z"
+  }
+ ],
+ "windowsVersion": {
+  "displayVersion": "24H2",
+  "ubr": 7019,
+  "editionId": "Professional",
+  "productName": "Windows 10 Pro"
+ },
+ "computerSystem": [
+  {
+   "Manufacturer": "Gigabyte Technology Co., Ltd.",
+   "Model": "B550 EAGLE WIFI6",
+   "SystemType": "x64-based PC",
+   "Domain": "WORKGROUP",
+   "Workgroup": "WORKGROUP",
+   "PartOfDomain": false,
+   "TotalPhysicalMemory": 51459084288,
+   "UserName": "EXAMPLE-PC\\example",
+   "PCSystemType": 1,
+   "HypervisorPresent": true,
+   "Name": "EXAMPLE-PC"
+  }
+ ],
+ "timeZone": "(UTC-05:00) Eastern Time (US & Canada)",
+ "culture": "en-US",
+ "firmwareType": "UEFI",
+ "uac": {
+  "enableLua": 1,
+  "consentPromptBehaviorAdmin": 5
+ },
+ "antivirus": [
+  {
+   "displayName": "Windows Defender",
+   "productState": 397568
+  }
+ ],
+ "firewall": [
+  {
+   "Name": "Domain",
+   "Enabled": "True"
+  },
+  {
+   "Name": "Private",
+   "Enabled": "True"
+  },
+  {
+   "Name": "Public",
+   "Enabled": "True"
+  }
+ ],
+ "secureBoot": {
+  "enabled": 1,
+  "ca2023Status": "Updated"
+ },
+ "tpm": [
+  {
+   "IsEnabled_InitialValue": true,
+   "IsActivated_InitialValue": true,
+   "SpecVersion": "2.0, 0, 1.59",
+   "ManufacturerIdTxt": "AMD",
+   "ManufacturerVersion": "3.87.0.5"
+  }
+ ],
+ "hotfixes": [
+  {
+   "HotFixID": "KB5066835",
+   "Description": "Security Update",
+   "InstalledOn": "2026-10-15T00:00:00.0000000Z"
+  },
+  {
+   "HotFixID": "KB5054156",
+   "Description": "Update",
+   "InstalledOn": "2026-04-10T00:00:00.0000000Z"
+  }
+ ],
+ "runtimes": {
+  "dotnetFramework": "4.8.09032",
+  "windowsPowerShell": "5.1.26100.7019",
+  "powershell7": null,
+  "java": "8.0.2410.7"
+ },
+ "powerPlan": "Power Scheme GUID: 9897998c-92de-4669-853f-b7cd3ecb2790  (AMD Ryzen High Performance)",
+ "processor": [
+  {
+   "Name": "AMD Ryzen 5 3600 6-Core Processor",
+   "Manufacturer": "AuthenticAMD",
+   "NumberOfCores": 6,
+   "NumberOfLogicalProcessors": 12,
+   "MaxClockSpeed": 3600,
+   "SocketDesignation": "AM4",
+   "L2CacheSize": 3072,
+   "L3CacheSize": 32768,
+   "VirtualizationFirmwareEnabled": false,
+   "SecondLevelAddressTranslationExtensions": false,
+   "Revision": 28928
+  }
+ ],
+ "physicalMemory": [
+  {
+   "BankLabel": "P0 CHANNEL A",
+   "DeviceLocator": "DIMM 0",
+   "Capacity": 8589934592,
+   "Speed": 3200,
+   "ConfiguredClockSpeed": 2133,
+   "Manufacturer": "Unknown",
+   "PartNumber": "F4-3200C16-8GVK",
+   "SerialNumber": "00000000",
+   "SMBIOSMemoryType": 26,
+   "FormFactor": 8,
+   "ConfiguredVoltage": 1350
+  },
+  {
+   "BankLabel": "P0 CHANNEL A",
+   "DeviceLocator": "DIMM 1",
+   "Capacity": 17179869184,
+   "Speed": 3200,
+   "ConfiguredClockSpeed": 2133,
+   "Manufacturer": "Unknown",
+   "PartNumber": "F4-3200C16-16GVK",
+   "SerialNumber": "00000000",
+   "SMBIOSMemoryType": 26,
+   "FormFactor": 8,
+   "ConfiguredVoltage": 1350
+  },
+  {
+   "BankLabel": "P0 CHANNEL B",
+   "DeviceLocator": "DIMM 0",
+   "Capacity": 8589934592,
+   "Speed": 3200,
+   "ConfiguredClockSpeed": 2133,
+   "Manufacturer": "Unknown",
+   "PartNumber": "F4-3200C16-8GVK",
+   "SerialNumber": "00000000",
+   "SMBIOSMemoryType": 26,
+   "FormFactor": 8,
+   "ConfiguredVoltage": 1350
+  },
+  {
+   "BankLabel": "P0 CHANNEL B",
+   "DeviceLocator": "DIMM 1",
+   "Capacity": 17179869184,
+   "Speed": 3200,
+   "ConfiguredClockSpeed": 2133,
+   "Manufacturer": "Unknown",
+   "PartNumber": "F4-3200C16-16GVK",
+   "SerialNumber": "00000000",
+   "SMBIOSMemoryType": 26,
+   "FormFactor": 8,
+   "ConfiguredVoltage": 1350
+  }
+ ],
+ "memoryArray": [
+  {
+   "MemoryDevices": 4,
+   "MaxCapacity": 134217728,
+   "MaxCapacityEx": 134217728,
+   "Use": 3
+  }
+ ],
+ "smbios": {
+  "version": "3.3",
+  "data": "ABgAAAECAAADAAAAAAAAAAAAAAAAAAAAQW1lcmljYW4gTWVnYXRyZW5kcyBJbnRlcm5hdGlvbmFsLCBMTEMuAEYxADExLzE4LzIwMjQAAAEcAQABAgMEAAAAAAAAAAAAAAAAAAAAAAAABQZHaWdhYnl0ZSBUZWNobm9sb2d5IENvLiwgTHRkLgBCNTUwIEVBR0xFIFdJRkk2AERlZmF1bHQgc3RyaW5nAERlZmF1bHQgc3RyaW5nAERlZmF1bHQgc3RyaW5nAEI1NTAgTUIAAAIJAgABAgMEAEdpZ2FieXRlIFRlY2hub2xvZ3kgQ28uLCBMdGQuAEI1NTAgRUFHTEUgV0lGSTYAeC54AERlZmF1bHQgc3RyaW5nAAAEKAQAAQAAAAAAAAAAAAAAAgBkAGgQAAAAAAAAAAAAAAAAAAAAAAAAQU00AEFNRCBSeXplbiA1IDM2MDAgNi1Db3JlIFByb2Nlc3NvcgAACREJAAGlDQQEAAAEAQAAAABKMTAAAAkRCgABpggEBAEABAEAAAAASjM3MDAgTS4yIFNsb3QAAAkRCwABpQoDBAIABAEAAAAASjM3MDggUENJRSB4NCBzbG90IGZyb20gUHJvbW9udG9yeQAAEA8QAAMDAwAAAAj+/wQAAAARXBEAAAAAAAAAAAAAIAkAAQIaAACADAMEAAUCAAAAAFUIAAAAAEYFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERJTU0gMABQMCBDSEFOTkVMIEEARyBTa2lsbCBJbnRsADAwMDAwMDAwAEY0LTMyMDBDMTYtOEdWSwAAEVwSAAAAAAAAAAAAAEAJAAECGgAAgAwDBAAFAgAAAABVCAAAAABGBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABESU1NIDEAUDAgQ0hBTk5FTCBBAEcgU2tpbGwgSW50bAAwMDAwMDAwMABGNC0zMjAwQzE2LTE2R1ZLAAARXBMAAAAAAAAAAAAAIAkAAQIaAACADAMEAAUCAAAAAFUIAAAAAEYFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERJTU0gMABQMCBDSEFOTkVMIEIARyBTa2lsbCBJbnRsADAwMDAwMDAwAEY0LTMyMDBDMTYtOEdWSwAAEVwUAAAAAAAAAAAAAEAJAAECGgAAgAwDBAAFAgAAAABVCAAAAABGBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABESU1NIDEAUDAgQ0hBTk5FTCBCAEcgU2tpbGwgSW50bAAwMDAwMDAwMABGNC0zMjAwQzE2LTE2R1ZLAAB/BP//AAA="
+ },
+ "baseBoard": [
+  {
+   "Manufacturer": "Gigabyte Technology Co., Ltd.",
+   "Product": "B550 EAGLE WIFI6",
+   "Version": "x.x",
+   "SerialNumber": "Default string"
+  }
+ ],
+ "bios": [
+  {
+   "Manufacturer": "American Megatrends International, LLC.",
+   "SMBIOSBIOSVersion": "F1",
+   "SerialNumber": "Default string",
+   "ReleaseDate": "2024-11-18T00:00:00.0000000Z"
+  }
+ ],
+ "videoControllers": [
+  {
+   "Name": "NVIDIA GeForce GTX 1070 Ti",
+   "AdapterCompatibility": "NVIDIA",
+   "DriverVersion": "32.0.15.8278",
+   "AdapterRAM": 4293918720,
+   "VideoProcessor": "NVIDIA GeForce GTX 1070 Ti",
+   "CurrentHorizontalResolution": 3840,
+   "CurrentVerticalResolution": 1600,
+   "CurrentRefreshRate": 60,
+   "CurrentBitsPerPixel": 32,
+   "PNPDeviceID": "PCI\\VEN_10DE&DEV_1B82&SUBSYS_66733842&REV_A1\\4&2283F625&0&0019",
+   "Status": "OK",
+   "DriverDate": "2025-09-30T00:00:00.0000000Z"
+  }
+ ],
+ "gpuMemory": [
+  {
+   "driverDesc": "NVIDIA GeForce GTX 1070 Ti",
+   "matchingDeviceId": "pci\\ven_10de&dev_1b82",
+   "memorySize": 8589934592
+  }
+ ],
+ "monitors": [
+  {
+   "instanceName": "DISPLAY\\GSM7714\\5&1a2b3c4d&0&UID4352_0",
+   "manufacturer": "GSM",
+   "name": "LG HDR WQHD",
+   "productCode": "7714",
+   "serial": "112NTAB12345",
+   "week": 23,
+   "year": 2021
+  }
+ ],
+ "monitorParams": [
+  {
+   "InstanceName": "DISPLAY\\GSM7714\\5&1a2b3c4d&0&UID4352_0",
+   "MaxHorizontalImageSize": 80,
+   "MaxVerticalImageSize": 34,
+   "VideoInputType": 1
+  }
+ ],
+ "diskDrives": [
+  {
+   "Index": 0,
+   "Model": "WDC WD40EZRZ-00GXCB0",
+   "SerialNumber": "WD-WCC7K0000001",
+   "FirmwareRevision": "80.00A80",
+   "InterfaceType": "IDE",
+   "MediaType": "Fixed hard disk media",
+   "Size": 4000784417280,
+   "PNPDeviceID": "SCSI\\DISK&VEN_WDC&PROD_WD40EZRZ-00GXCB0\\4&2A0E4F3B&0&000000",
+   "Partitions": 2,
+   "Status": "OK"
+  },
+  {
+   "Index": 2,
+   "Model": "Crucial_CT512M550SSD1",
+   "SerialNumber": "14230C000000",
+   "FirmwareRevision": "MU01",
+   "InterfaceType": "IDE",
+   "MediaType": "Fixed hard disk media",
+   "Size": 512105932800,
+   "PNPDeviceID": "SCSI\\DISK&VEN_CRUCIAL&PROD_CT512M550SSD1\\4&2A0E4F3B&0&010000",
+   "Partitions": 2,
+   "Status": "OK"
+  },
+  {
+   "Index": 3,
+   "Model": "TEAM TM8FP6002T",
+   "SerialNumber": "TPBF0000000000000001",
+   "FirmwareRevision": "VC2S038E",
+   "InterfaceType": "SCSI",
+   "MediaType": "Fixed hard disk media",
+   "Size": 2048407280640,
+   "PNPDeviceID": "SCSI\\DISK&VEN_NVME&PROD_TEAM_TM8FP6002T\\5&1C2D3E4F&0&000000",
+   "Partitions": 1,
+   "Status": "OK"
+  }
+ ],
+ "physicalDisks": [
+  {
+   "deviceId": "0",
+   "friendlyName": "WDC WD40EZRZ-00GXCB0",
+   "mediaType": "HDD",
+   "busType": "SATA",
+   "size": 4000787030016,
+   "healthStatus": "Healthy",
+   "spindleSpeed": 5400,
+   "firmwareVersion": "80.00A80"
+  },
+  {
+   "deviceId": "2",
+   "friendlyName": "Crucial_CT512M550SSD1",
+   "mediaType": "SSD",
+   "busType": "SATA",
+   "size": 512110190592,
+   "healthStatus": "Healthy",
+   "spindleSpeed": 0,
+   "firmwareVersion": "MU01"
+  },
+  {
+   "deviceId": "3",
+   "friendlyName": "TEAM TM8FP6002T",
+   "mediaType": "SSD",
+   "busType": "NVMe",
+   "size": 2048408248320,
+   "healthStatus": "Healthy",
+   "spindleSpeed": 0,
+   "firmwareVersion": "VC2S038E"
+  }
+ ],
+ "reliability": [
+  {
+   "deviceId": "3",
+   "temperature": 38,
+   "temperatureMax": 70,
+   "wear": 12,
+   "powerOnHours": 9120,
+   "readErrorsUncorrected": 0,
+   "writeErrorsUncorrected": 0,
+   "startStopCycleCount": null
+  }
+ ],
+ "smartData": [
+  {
+   "instanceName": "SCSI\\Disk&Ven_WDC&Prod_WD40EZRZ-00GXCB0\\4&2a0e4f3b&0&000000_0",
+   "data": "EAABCwDIyAAAAAAAAAADCwC5pVQWAAAAAAAECwBjYykEAAAAAAAFCwDIyAAAAAAAAAAHCwDIyAAAAAAAAAAJCwBBP/JlAAAAAAAKCwBkZAAAAAAAAAAMCwBkZJgBAAAAAADACwDIyEMAAAAAAADBCwC8vLaVAAAAAADCCwBzaCMAAAAAAADECwDIyAAAAAAAAADFCwDIyAAAAAAAAADGCwDIyAAAAAAAAADHCwDIyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  },
+  {
+   "instanceName": "SCSI\\Disk&Ven_Crucial&Prod_CT512M550SSD1\\4&2a0e4f3b&0&010000_0",
+   "data": "EAABCwBkZAAAAAAAAAAFCwBkZAAAAAAAAAAJCwBkZL3GAAAAAAAMCwBkZMsFAAAAAACtCwBRUT4CAAAAAADCCwA/LyUAAAAAAADECwBkZBAAAAAAAADFCwBkZAAAAAAAAADGCwBkZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  }
+ ],
+ "smartThresholds": [
+  {
+   "instanceName": "SCSI\\Disk&Ven_WDC&Prod_WD40EZRZ-00GXCB0\\4&2a0e4f3b&0&000000_0",
+   "data": "AAABMwAAAAAAAAAAAAADFQAAAAAAAAAAAAAFjAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  }
+ ],
+ "smartStatus": [
+  {
+   "InstanceName": "SCSI\\Disk&Ven_WDC&Prod_WD40EZRZ-00GXCB0\\4&2a0e4f3b&0&000000_0",
+   "PredictFailure": false
+  }
+ ],
+ "partitions": [
+  {
+   "diskNumber": 0,
+   "partitionNumber": 1,
+   "driveLetter": null,
+   "size": 16777216,
+   "type": "Reserved"
+  },
+  {
+   "diskNumber": 0,
+   "partitionNumber": 2,
+   "driveLetter": "G",
+   "size": 4000768000000,
+   "type": "Basic"
+  },
+  {
+   "diskNumber": 2,
+   "partitionNumber": 1,
+   "driveLetter": null,
+   "size": 104857600,
+   "type": "System"
+  },
+  {
+   "diskNumber": 2,
+   "partitionNumber": 2,
+   "driveLetter": "C",
+   "size": 404800000000,
+   "type": "Basic"
+  },
+  {
+   "diskNumber": 3,
+   "partitionNumber": 1,
+   "driveLetter": "B",
+   "size": 2048406000000,
+   "type": "Basic"
+  }
+ ],
+ "logicalDisks": [
+  {
+   "DeviceID": "C:",
+   "FileSystem": "NTFS",
+   "Size": 404800000000,
+   "FreeSpace": 54700000000,
+   "VolumeName": "",
+   "VolumeSerialNumber": "6E074469",
+   "DriveType": 3
+  },
+  {
+   "DeviceID": "G:",
+   "FileSystem": "NTFS",
+   "Size": 4000768000000,
+   "FreeSpace": 1200000000000,
+   "VolumeName": "Archive",
+   "VolumeSerialNumber": "1A2B3C4D",
+   "DriveType": 3
+  },
+  {
+   "DeviceID": "B:",
+   "FileSystem": "NTFS",
+   "Size": 2048406000000,
+   "FreeSpace": 1292000000000,
+   "VolumeName": "Games",
+   "VolumeSerialNumber": "04A3AF20",
+   "DriveType": 3
+  }
+ ],
+ "cdrom": [
+  {
+   "Name": "HL-DT-ST DVD+-RW GHA2N",
+   "Drive": "E:",
+   "MediaLoaded": false,
+   "MediaType": "DVD Writer",
+   "Status": "OK",
+   "CapabilityDescriptions": [
+    "Random Access",
+    "Supports Writing",
+    "Supports Removable Media"
+   ],
+   "SCSIBus": 3,
+   "SCSILogicalUnit": 0,
+   "SCSIPort": 0,
+   "SCSITargetId": 0
+  }
+ ],
+ "soundDevices": [
+  {
+   "Name": "NVIDIA High Definition Audio",
+   "Manufacturer": "NVIDIA",
+   "Status": "OK"
+  },
+  {
+   "Name": "Realtek High Definition Audio",
+   "Manufacturer": "Realtek",
+   "Status": "OK"
+  },
+  {
+   "Name": "USB Audio Device",
+   "Manufacturer": "(Generic USB Audio)",
+   "Status": "OK"
+  }
+ ],
+ "audioEndpoints": [
+  {
+   "FriendlyName": "Speakers (Realtek(R) Audio)",
+   "Status": "OK"
+  },
+  {
+   "FriendlyName": "Microphone (USB Audio Device)",
+   "Status": "OK"
+  },
+  {
+   "FriendlyName": "LG HDR WQHD (NVIDIA High Definition Audio)",
+   "Status": "OK"
+  }
+ ],
+ "keyboards": [
+  {
+   "Name": "HID Keyboard Device",
+   "Description": "Keyboard",
+   "PNPDeviceID": "HID\\{00001812-0000-1000-8000-00805F9B34FB}_DEV_VID&02046D_PID&B35B\\9&1"
+  }
+ ],
+ "pointingDevices": [
+  {
+   "Name": "HID-compliant mouse",
+   "Manufacturer": "Logitech",
+   "PNPDeviceID": "HID\\VID_046D&PID_C52B&MI_01\\8&2"
+  }
+ ],
+ "printers": [
+  {
+   "Name": "Brother HL-L2350DW series",
+   "PortName": "BRW8CC84B000000",
+   "Default": true,
+   "DriverName": "Brother HL-L2350DW series",
+   "Network": true,
+   "Shared": false,
+   "WorkOffline": false
+  },
+  {
+   "Name": "Microsoft Print to PDF",
+   "PortName": "PORTPROMPT:",
+   "Default": false,
+   "DriverName": "Microsoft Print To PDF",
+   "Network": false,
+   "Shared": false,
+   "WorkOffline": false
+  }
+ ],
+ "usbDevices": [
+  {
+   "Name": "USB Composite Device",
+   "PNPClass": "USB",
+   "Manufacturer": "(Standard USB Host Controller)",
+   "PNPDeviceID": "USB\\VID_046D&PID_0A87\\000000000000",
+   "Status": "OK"
+  },
+  {
+   "Name": "Logitech USB Input Device",
+   "PNPClass": "HIDClass",
+   "Manufacturer": "Logitech",
+   "PNPDeviceID": "USB\\VID_046D&PID_C52B&MI_00\\7&1",
+   "Status": "OK"
+  },
+  {
+   "Name": "Generic USB Hub",
+   "PNPClass": "USB",
+   "Manufacturer": "(Standard USB HUBs)",
+   "PNPDeviceID": "USB\\VID_05E3&PID_0610\\6&1",
+   "Status": "OK"
+  }
+ ],
+ "usbControllers": [
+  {
+   "Name": "AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft)",
+   "Manufacturer": "Advanced Micro Devices"
+  }
+ ],
+ "deviceProblems": [
+  {
+   "Name": "Base System Device",
+   "PNPClass": null,
+   "ConfigManagerErrorCode": 28,
+   "PNPDeviceID": "PCI\\VEN_1022&DEV_1234\\3&1",
+   "Present": true
+  },
+  {
+   "Name": "Xbox Wireless Adapter",
+   "PNPClass": "Net",
+   "ConfigManagerErrorCode": 45,
+   "PNPDeviceID": "USB\\VID_045E&PID_02FE\\1",
+   "Present": false
+  }
+ ],
+ "drivers": [
+  {
+   "DeviceName": "NVIDIA GeForce GTX 1070 Ti",
+   "DeviceClass": "DISPLAY",
+   "DriverVersion": "32.0.15.8278",
+   "DriverProviderName": "NVIDIA",
+   "IsSigned": true,
+   "DriverDate": "2025-09-30T00:00:00.0000000Z"
+  },
+  {
+   "DeviceName": "Realtek PCIe GbE Family Controller",
+   "DeviceClass": "NET",
+   "DriverVersion": "10.38.1009.2019",
+   "DriverProviderName": "Realtek",
+   "IsSigned": true,
+   "DriverDate": "2019-10-09T00:00:00.0000000Z"
+  },
+  {
+   "DeviceName": "Realtek High Definition Audio",
+   "DeviceClass": "MEDIA",
+   "DriverVersion": "6.0.9235.1",
+   "DriverProviderName": "Realtek Semiconductor Corp.",
+   "IsSigned": true,
+   "DriverDate": "2021-08-24T00:00:00.0000000Z"
+  },
+  {
+   "DeviceName": "Standard SATA AHCI Controller",
+   "DeviceClass": "HDC",
+   "DriverVersion": "10.0.26100.1",
+   "DriverProviderName": "Microsoft",
+   "IsSigned": true,
+   "DriverDate": "2006-06-21T00:00:00.0000000Z"
+  }
+ ],
+ "netAdapters": [
+  {
+   "Name": "Wi-Fi 2",
+   "InterfaceDescription": "Realtek 8851BE Wireless LAN WiFi 6 PCI-E NIC",
+   "Status": "Up",
+   "LinkSpeed": "866.7 Mbps",
+   "MacAddress": "AC-36-1B-00-00-01",
+   "MediaType": "Native 802.11",
+   "PhysicalMediaType": "Native 802.11",
+   "ifIndex": 12,
+   "Virtual": false,
+   "DriverVersion": "6001.16.181.0"
+  },
+  {
+   "Name": "Ethernet 2",
+   "InterfaceDescription": "Realtek PCIe GbE Family Controller",
+   "Status": "Disconnected",
+   "LinkSpeed": "0 bps",
+   "MacAddress": "10-FF-E0-00-00-02",
+   "MediaType": "802.3",
+   "PhysicalMediaType": "802.3",
+   "ifIndex": 7,
+   "Virtual": false,
+   "DriverVersion": "10.38.1009.2019"
+  }
+ ],
+ "ipConfig": [
+  {
+   "Description": "Realtek 8851BE Wireless LAN WiFi 6 PCI-E NIC",
+   "InterfaceIndex": 12,
+   "IPAddress": [
+    "192.168.0.197",
+    "fe80::1"
+   ],
+   "IPSubnet": [
+    "255.255.255.0",
+    "64"
+   ],
+   "DefaultIPGateway": [
+    "192.168.0.1"
+   ],
+   "DNSServerSearchOrder": [
+    "192.168.0.1"
+   ],
+   "DHCPEnabled": true,
+   "DHCPServer": "192.168.0.1"
+  }
+ ],
+ "shares": [
+  {
+   "Name": "ADMIN$",
+   "Path": "C:\\WINDOWS",
+   "Type": 2147483648
+  },
+  {
+   "Name": "Users",
+   "Path": "C:\\Users",
+   "Type": 0
+  }
+ ],
+ "remoteDesktop": {
+  "denyConnections": 1
+ },
+ "proxy": {
+  "enabled": 0,
+  "server": null,
+  "autoConfigUrl": null
+ },
+ "wlanInterfaces": "\r\nThere is 1 interface on the system:\r\n\r\n    Name                   : Wi-Fi 2\r\n    State                  : connected\r\n    SSID                   : ExampleNet\r\n    Radio type             : 802.11ax\r\n    Band                   : 5 GHz\r\n    Channel                : 157\r\n    Authentication         : WPA2-Personal\r\n    Receive rate (Mbps)    : 866.7\r\n    Transmit rate (Mbps)   : 866.7\r\n    Signal                 : 98%\r\n",
+ "cpuid": [
+  [
+   0,
+   0,
+   16,
+   1752462657,
+   1145913699,
+   1769238117
+  ],
+  [
+   1,
+   0,
+   8851216,
+   0,
+   1914180099,
+   109051904
+  ],
+  [
+   7,
+   0,
+   0,
+   537395496,
+   0,
+   0
+  ],
+  [
+   2147483648,
+   0,
+   2147483680,
+   0,
+   0,
+   0
+  ],
+  [
+   2147483649,
+   0,
+   0,
+   0,
+   68,
+   537919488
+  ],
+  [
+   2147483650,
+   0,
+   541347137,
+   1702525266,
+   540352622,
+   808465971
+  ],
+  [
+   2147483651,
+   0,
+   1127036448,
+   543519343,
+   1668248144,
+   1869837157
+  ],
+  [
+   2147483652,
+   0,
+   538976370,
+   538976288,
+   538976288,
+   8224
+  ],
+  [
+   2147483677,
+   0,
+   16417,
+   29360191,
+   63,
+   0
+  ],
+  [
+   2147483677,
+   1,
+   16418,
+   29360191,
+   63,
+   0
+  ],
+  [
+   2147483677,
+   2,
+   16451,
+   29360191,
+   1023,
+   0
+  ],
+  [
+   2147483677,
+   3,
+   82019,
+   62914623,
+   16383,
+   0
+  ],
+  [
+   2147483677,
+   4,
+   0,
+   0,
+   0,
+   0
+  ]
+ ],
+ "errors": []
+}

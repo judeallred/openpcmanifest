@@ -1,0 +1,8 @@
+/target
+/dist
+*.nupkg
+smoke-*.json
+smoke-*.txt
+# Raw snapshots contain private details; never commit real ones.
+pc-snapshot*.json
+pc-report*

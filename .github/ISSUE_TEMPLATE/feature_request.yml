@@ -1,0 +1,20 @@
+name: Feature request
+description: Suggest something OpenPCManifest should show or do.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What question should OpenPCManifest answer for you?
+      description: Describe the problem first, e.g. "I can't tell which M.2 slot my SSD is in."
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+  - type: textarea
+    id: elsewhere
+    attributes:
+      label: Does another tool do this well?
+      description: Speccy, HWiNFO, CPU-Z, CrystalDiskInfo... Screenshots welcome.

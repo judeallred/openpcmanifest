@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- __VERSION__ is filled in by .github/workflows/release.yml. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>openpcmanifest</id>
+    <version>__VERSION__</version>
+    <title>OpenPCManifest</title>
+    <authors>Jude Allred and contributors</authors>
+    <owners>judeallred</owners>
+    <projectUrl>https://github.com/judeallred/openpcmanifest</projectUrl>
+    <projectSourceUrl>https://github.com/judeallred/openpcmanifest</projectSourceUrl>
+    <bugTrackerUrl>https://github.com/judeallred/openpcmanifest/issues</bugTrackerUrl>
+    <docsUrl>https://github.com/judeallred/openpcmanifest/wiki</docsUrl>
+    <licenseUrl>https://github.com/judeallred/openpcmanifest/blob/main/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <tags>hardware system-information speccy inventory smart foss portable</tags>
+    <summary>Open-source Speccy alternative: a portable hardware inventory for Windows.</summary>
+    <description>
+OpenPCManifest shows exactly what is inside your PC: CPU, RAM and free slots, motherboard and PCIe slots,
+graphics and monitors, drives with SMART health, audio, peripherals, USB and network. It answers upgrade
+questions, flags old drivers and device problems, checks Windows 11 readiness, and exports text, Markdown,
+BBCode, JSON or HTML with one-click redaction of serial numbers and addresses.
+
+Free and MIT licensed. No installer, no telemetry, no network access, no bundled software.
+    </description>
+    <releaseNotes>https://github.com/judeallred/openpcmanifest/releases</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+    <file src="legal\**" target="legal" />
+  </files>
+</package>

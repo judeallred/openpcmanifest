@@ -1,0 +1,69 @@
+[package]
+name = "openpcmanifest"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.97"
+description = "Open-source Speccy alternative: a portable Windows hardware inventory with upgrade answers, drive health and safe sharing."
+license = "MIT"
+repository = "https://github.com/judeallred/openpcmanifest"
+homepage = "https://github.com/judeallred/openpcmanifest"
+readme = "README.md"
+keywords = ["hardware", "system-information", "speccy", "inventory", "windows"]
+categories = ["command-line-utilities", "hardware-support", "os::windows-apis"]
+authors = ["Jude Allred"]
+exclude = ["/.github", "/packaging", "/docs/images"]
+
+[features]
+default = ["gui"]
+# The graphical interface. Build with `--no-default-features` for a
+# dependency-free command-line tool.
+gui = ["dep:eframe", "dep:rfd"]
+
+[dependencies]
+eframe = { version = "0.31", optional = true }
+rfd = { version = "0.15", optional = true }
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[lints.rust]
+unsafe_code = "deny"
+missing_docs = "deny"
+unused_qualifications = "deny"
+unused_import_braces = "deny"
+unused_lifetimes = "deny"
+trivial_casts = "deny"
+trivial_numeric_casts = "deny"
+unreachable_pub = "allow"
+single_use_lifetimes = "deny"
+
+[lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+cargo = { level = "deny", priority = -1 }
+# eframe pulls in several versions of the same windowing crates; that is
+# outside our control.
+multiple_crate_versions = "allow"
+# Selected restriction lints.
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+indexing_slicing = "deny"
+todo = "deny"
+unimplemented = "deny"
+dbg_macro = "deny"
+print_stdout = "deny"
+print_stderr = "deny"
+allow_attributes_without_reason = "deny"
+undocumented_unsafe_blocks = "deny"
+string_slice = "deny"
+exit = "deny"
+lossy_float_literal = "deny"
+rc_mutex = "deny"
+rest_pat_in_fully_bound_structs = "deny"
+str_to_string = "deny"
+verbose_file_reads = "deny"

@@ -1,0 +1,91 @@
+OpenPCManifest 0.1.0
+Collected 2026-11-15T12:00:00.0000000Z
+Note: Not running as administrator: SMART attributes, drive reliability counters and TPM details are unavailable. Right-click and choose “Run as administrator” to include them.
+
+Summary
+=======
+Operating system: Windows 10 Home 64-bit (22H2, build 19045.6456)
+CPU: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz — 2 cores / 4 threads
+RAM: 8 GB DDR4 single-channel @ 2133 MT/s (1066 MHz) (1 of 2 slots used)
+Storage
+  Drive: 256 GB SAMSUNG MZVLW256 (NVMe SSD) — Good
+
+Operating System
+================
+Edition: Windows 10 Home 64-bit
+Version: 22H2
+Build: 19045.6456
+Computer name: LAPTOP-1
+Firmware: Legacy
+
+CPU
+===
+Name: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+Cores: 2
+Threads: 4
+Base clock: 2701 MHz
+Simultaneous multithreading: Supported, enabled
+
+RAM
+===
+Memory slots
+  Total: 2
+  Used: 1
+  Free: 1
+Installed: 8 GB
+Type: DDR4
+Channels (estimated): Single
+Speed: 2133 MT/s (1066 MHz)
+Maximum supported: 32 GB
+Usage
+  Usable: 7.63 GB
+  Available: 1.91 GB
+  In use: 75%
+Modules
+  Slot ChannelA-DIMM0 (BANK 0)
+    Size: 8 GB
+    Rated speed: 2133 MT/s
+    Configured speed: 2133 MT/s
+
+Storage
+=======
+SAMSUNG MZVLW256
+  Capacity: 256 GB
+  Exact size: 256052966400 bytes
+  Interface: NVMe
+  Type: SSD
+  Health: Good
+
+Upgrade Advisor
+===============
+Memory
+  Installed: 8 GB of 32 GB supported
+  Slots: 1 of 2 used, 1 free
+  You can: Add up to 1 more DDR4 module. Match the existing speed (2133 MT/s) so every module runs at full speed.
+Storage
+  Drives: 1 × NVMe SSD
+  Free ports: Windows does not report empty SATA ports or M.2 sockets; check the board manual.
+
+Device Problems
+===============
+Result: No devices report problems
+
+Windows 11 Readiness
+====================
+Result: Does not meet Windows 11 requirements
+TPM: Unknown (run as administrator)
+Firmware: Legacy
+Secure Boot: Not supported or not reported
+Memory: 7.63 GB (4 GB required)
+System drive: 255 GB (64 GB required)
+Secure Boot 2023 certificates: Not reported. The 2011 Microsoft Secure Boot certificates expired in 2026; Windows Update installs the replacements.
+
+About This Report
+=================
+Collected: 2026-11-15T12:00:00.0000000Z
+Windows PowerShell: 5.1.19041.1
+Administrator: No
+Queries that failed: 3
+  smbios: Access denied
+  tpm: Access denied
+  smartData: Access denied

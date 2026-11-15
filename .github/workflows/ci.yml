@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -D warnings
+
+jobs:
+  fmt:
+    name: Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # rustup reads rust-toolchain.toml and installs the pinned toolchain.
+      - run: rustup show active-toolchain || rustup toolchain install
+      - run: cargo fmt --all --check
+
+  windows:
+    name: Windows (clippy, tests, live smoke test)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show active-toolchain || rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+      - name: Clippy (maximum strictness)
+        run: cargo clippy --all-targets --all-features -- -D warnings
+      - name: Tests
+        run: cargo test --all-features
+      - name: Smoke test against this runner's real hardware
+        shell: pwsh
+        run: |
+          cargo run --release -- --json --redact --out smoke-report.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo run --release -- --text --save-raw smoke-raw.json --out smoke-report.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Get-Content smoke-report.txt -TotalCount 40
+      - name: Keep the smoke-test output for inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-windows
+          path: |
+            smoke-report.json
+            smoke-report.txt
+          retention-days: 14
+
+  linux:
+    name: Linux (core library, no GUI)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show active-toolchain || rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+      - name: Clippy (maximum strictness)
+        run: cargo clippy --all-targets --no-default-features -- -D warnings
+      - name: Tests
+        run: cargo test --no-default-features
+
+  deny:
+    name: Licences and advisories
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EmbarkStudios/cargo-deny-action@v2

@@ -1,0 +1,424 @@
+OpenPCManifest 0.1.0 (fixture)
+Collected 2026-11-15T19:04:44.0000000Z
+
+Summary
+=======
+Operating system: Windows 11 Pro 64-bit (24H2, build 26100.7019)
+CPU: AMD Ryzen 5 3600 6-Core Processor (Matisse, 7 nm) — 6 cores / 12 threads
+RAM: 48 GB DDR4 dual-channel @ 2133 MT/s (1066 MHz) (4 of 4 slots used)
+Motherboard: Gigabyte Technology Co., Ltd. B550 EAGLE WIFI6 (AM4)
+Graphics
+  Monitor: LG HDR WQHD (3840 × 1600 @ 60 Hz, 32-bit)
+  GPU: NVIDIA GeForce GTX 1070 Ti, 8 GB
+Storage
+  Drive: 4 TB WDC WD40EZRZ-00GXCB0 (SATA HDD) — Good
+  Drive: 512 GB Crucial_CT512M550SSD1 (SATA SSD) — Caution
+  Drive: 2.05 TB TEAM TM8FP6002T (NVMe SSD) — Good
+Optical: HL-DT-ST DVD+-RW GHA2N
+Audio: NVIDIA High Definition Audio, Realtek High Definition Audio, USB Audio Device
+Network: Realtek 8851BE Wireless LAN WiFi 6 PCI-E NIC
+
+Operating System
+================
+Edition: Windows 11 Pro 64-bit
+Version: 24H2
+Build: 26100.7019
+Installed: 2024-12-30 (1 year old)
+Last boot: 2026-11-15 17:27 UTC
+Uptime: 1 h 37 m
+Computer name: EXAMPLE-PC
+Registered user: example-user
+Product ID: 00330-80000-00000-AA000
+System model: Gigabyte Technology Co., Ltd. B550 EAGLE WIFI6
+Workgroup: WORKGROUP
+Security
+  User Account Control: Enabled
+  Firewall (Domain): On
+  Firewall (Private): On
+  Firewall (Public): On
+  Antivirus: Windows Defender: on, definitions up to date
+Runtimes
+  .NET Framework: 4.8.09032
+  Windows PowerShell: 5.1.26100.7019
+  Java: 8.0.2410.7
+Power plan: AMD Ryzen High Performance
+Firmware: UEFI
+Time zone: (UTC-05:00) Eastern Time (US & Canada)
+Locale: en-US
+Installed updates: 2
+  KB5066835: Security Update, 2026-10-15
+  KB5054156: Update, 2026-04-10
+
+CPU
+===
+Name: AMD Ryzen 5 3600 6-Core Processor
+Code name: Matisse
+Technology: 7 nm
+Cores: 6
+Threads: 12
+Socket: AM4
+Base clock: 3600 MHz
+Vendor: AuthenticAMD
+Family / model / stepping: 17h / 71h / 0
+CPUID fields: family F, extended family 8, model 1, extended model 7
+Instructions: MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, SSE4A, AES, PCLMULQDQ, AVX, FMA3, F16C, RDRAND, AVX2, BMI1, BMI2, ADX, SHA, x86-64, NX
+Virtualization: AMD-V, in use by the Windows hypervisor
+Simultaneous multithreading: Supported, enabled
+Caches
+  L1 data: 6 × 32 KB, 8-way
+  L1 instruction: 6 × 32 KB, 8-way
+  L2 unified: 6 × 512 KB, 8-way
+  L3 unified: 2 × 16 MB, 16-way
+
+RAM
+===
+Memory slots
+  Total: 4
+  Used: 4
+  Free: 0
+Installed: 48 GB
+Type: DDR4
+Channels (estimated): Dual
+Speed: 2133 MT/s (1066 MHz)
+Rated speed: 3200 MT/s — modules run slower than rated
+Maximum supported: 128 GB
+Usage
+  Usable: 47.9 GB
+  Available: 33 GB
+  In use: 31%
+Modules
+  Slot DIMM 0 (P0 CHANNEL A)
+    Size: 8 GB
+    Type: DDR4
+    Manufacturer: G Skill Intl
+    Part number: F4-3200C16-8GVK
+    Rated speed: 3200 MT/s
+    Configured speed: 2133 MT/s
+    Voltage: 1.35 V
+    Form factor: DIMM
+    Ranks: 2
+  Slot DIMM 1 (P0 CHANNEL A)
+    Size: 16 GB
+    Type: DDR4
+    Manufacturer: G Skill Intl
+    Part number: F4-3200C16-16GVK
+    Rated speed: 3200 MT/s
+    Configured speed: 2133 MT/s
+    Voltage: 1.35 V
+    Form factor: DIMM
+    Ranks: 2
+  Slot DIMM 0 (P0 CHANNEL B)
+    Size: 8 GB
+    Type: DDR4
+    Manufacturer: G Skill Intl
+    Part number: F4-3200C16-8GVK
+    Rated speed: 3200 MT/s
+    Configured speed: 2133 MT/s
+    Voltage: 1.35 V
+    Form factor: DIMM
+    Ranks: 2
+  Slot DIMM 1 (P0 CHANNEL B)
+    Size: 16 GB
+    Type: DDR4
+    Manufacturer: G Skill Intl
+    Part number: F4-3200C16-16GVK
+    Rated speed: 3200 MT/s
+    Configured speed: 2133 MT/s
+    Voltage: 1.35 V
+    Form factor: DIMM
+    Ranks: 2
+
+Motherboard
+===========
+Manufacturer: Gigabyte Technology Co., Ltd.
+Model: B550 EAGLE WIFI6
+Version: x.x
+System: Gigabyte Technology Co., Ltd. B550 EAGLE WIFI6
+BIOS
+  Vendor: American Megatrends International, LLC.
+  Version: F1
+  Date: 2024-11-18 (1 year old)
+Expansion slots
+  J10: In use
+    Type: PCIe
+    Lanes: x16
+    Characteristics: 3.3 V, PME
+    Slot number: 0
+  J3700 M.2 Slot: In use
+    Type: PCIe x1
+    Lanes: x1
+    Characteristics: 3.3 V, PME
+    Slot number: 1
+  J3708 PCIE x4 slot from Promontory: Available
+    Type: PCIe
+    Lanes: x4
+    Characteristics: 3.3 V, PME
+    Slot number: 2
+
+Graphics
+========
+Monitor: LG HDR WQHD
+  Manufacturer: LG (GSM)
+  Product code: 7714
+  Serial number: 112NTAB12345
+  Manufactured: Week 23, 2021
+  Screen size: 34 in (80 × 34 cm)
+  Input: Digital
+NVIDIA GeForce GTX 1070 Ti
+  Vendor: NVIDIA
+  Video memory: 8 GB
+  Processor: NVIDIA GeForce GTX 1070 Ti
+  Device ID: 10DE-1B82
+  Card maker: EVGA (3842)
+  Subsystem ID: 66733842
+  Revision: A1
+  Current mode: 3840 × 1600 @ 60 Hz, 32-bit
+  Driver version: 32.0.15.8278
+  Driver date: 2025-09-30 (1 year old)
+  Status: OK
+
+Storage
+=======
+WDC WD40EZRZ-00GXCB0
+  Capacity: 4 TB
+  Exact size: 4000784417280 bytes
+  Interface: SATA
+  Type: HDD
+  Speed: 5400 RPM
+  Firmware: 80.00A80
+  Serial number: WD-WCC7K0000001
+  Health: Good
+  Usage
+    Temperature: 35 °C
+    Power-on time: 26098 h (3.0 years)
+    Power cycles: 408
+  SMART attributes: 15
+    01 Read Error Rate: raw 0 · value 200 · worst 200 · threshold 51
+    03 Spin-Up Time: raw 5716 · value 185 · worst 165 · threshold 21
+    04 Start/Stop Count: raw 1065 · value 99 · worst 99 · threshold –
+    05 Reallocated Sectors Count: raw 0 · value 200 · worst 200 · threshold 140
+    07 Seek Error Rate: raw 0 · value 200 · worst 200 · threshold –
+    09 Power-On Hours: raw 26098 h · value 65 · worst 63 · threshold 0
+    0A Spin Retry Count: raw 0 · value 100 · worst 100 · threshold –
+    0C Power Cycle Count: raw 408 · value 100 · worst 100 · threshold –
+    C0 Power-off Retract Count: raw 67 · value 200 · worst 200 · threshold –
+    C1 Load/Unload Cycle Count: raw 38326 · value 188 · worst 188 · threshold –
+    C2 Temperature: raw 35 °C · value 115 · worst 104 · threshold –
+    C4 Reallocation Event Count: raw 0 · value 200 · worst 200 · threshold –
+    C5 Current Pending Sector Count: raw 0 · value 200 · worst 200 · threshold –
+    C6 Uncorrectable Sector Count: raw 0 · value 200 · worst 200 · threshold –
+    C7 UltraDMA CRC Error Count: raw 0 · value 200 · worst 200 · threshold –
+  Partitions
+    Partition 1
+      Type: Reserved
+      Size: 16.8 MB
+    Partition 2 (G:)
+      Type: Basic
+      Size: 4 TB
+      File system: NTFS
+      Label: Archive
+      Free space: 1.20 TB (30%)
+      Volume serial: 1A2B3C4D
+Crucial_CT512M550SSD1
+  Capacity: 512 GB
+  Exact size: 512105932800 bytes
+  Interface: SATA
+  Type: SSD
+  Firmware: MU01
+  Serial number: 14230C000000
+  Health: Caution: 16 reallocation events
+  Usage
+    Temperature: 37 °C
+    Power-on time: 50877 h (5.8 years)
+    Power cycles: 1483
+  SMART attributes: 9
+    01 Read Error Rate: raw 0 · value 100 · worst 100 · threshold –
+    05 Reallocated Sectors Count: raw 0 · value 100 · worst 100 · threshold –
+    09 Power-On Hours: raw 50877 h · value 100 · worst 100 · threshold –
+    0C Power Cycle Count: raw 1483 · value 100 · worst 100 · threshold –
+    AD Wear Leveling Count: raw 574 · value 81 · worst 81 · threshold –
+    C2 Temperature: raw 37 °C · value 63 · worst 47 · threshold –
+    C4 Reallocation Event Count: raw 16 · value 100 · worst 100 · threshold –
+    C5 Current Pending Sector Count: raw 0 · value 100 · worst 100 · threshold –
+    C6 Uncorrectable Sector Count: raw 0 · value 100 · worst 100 · threshold –
+  Partitions
+    Partition 1
+      Type: System
+      Size: 105 MB
+    Partition 2 (C:)
+      Type: Basic
+      Size: 405 GB
+      File system: NTFS
+      Free space: 54.7 GB (14%)
+      Volume serial: 6E074469
+TEAM TM8FP6002T
+  Capacity: 2.05 TB
+  Exact size: 2048407280640 bytes
+  Interface: NVMe
+  Type: SSD
+  Firmware: VC2S038E
+  Serial number: TPBF0000000000000001
+  Health: Good
+  Usage
+    Temperature: 38 °C
+    Power-on time: 9120 h (1.0 years)
+    Endurance used: 12%
+  Partitions
+    Partition 1 (B:)
+      Type: Basic
+      Size: 2.05 TB
+      File system: NTFS
+      Label: Games
+      Free space: 1.29 TB (63%)
+      Volume serial: 04A3AF20
+
+Optical Drives
+==============
+HL-DT-ST DVD+-RW GHA2N
+  Drive letter: E:
+  Type: DVD Writer
+  Media loaded: No
+  Capabilities: Random Access, Supports Writing, Supports Removable Media
+  SCSI address: bus 3, target 0, LUN 0
+  Status: OK
+
+Audio
+=====
+Sound devices
+  NVIDIA High Definition Audio: NVIDIA, OK
+  Realtek High Definition Audio: Realtek, OK
+  USB Audio Device: (Generic USB Audio), OK
+Playback and recording endpoints
+  Speakers (Realtek(R) Audio): OK
+  Microphone (USB Audio Device): OK
+  LG HDR WQHD (NVIDIA High Definition Audio): OK
+
+Peripherals
+===========
+Keyboards
+  HID Keyboard Device: Bluetooth LE
+Pointing devices
+  HID-compliant mouse: Logitech, USB
+Printers
+  Brother HL-L2350DW series (default)
+    Driver: Brother HL-L2350DW series
+    Port: BRW8CC84B000000
+    Network printer: Yes
+    Shared: No
+  Microsoft Print to PDF
+    Driver: Microsoft Print To PDF
+    Port: PORTPROMPT:
+    Network printer: No
+    Shared: No
+
+USB
+===
+Controllers
+  AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft): Advanced Micro Devices
+HIDClass: 1
+  Logitech USB Input Device: Logitech, ID 046D:C52B
+USB: 2
+  USB Composite Device: (Standard USB Host Controller), ID 046D:0A87
+  Generic USB Hub: (Standard USB HUBs), ID 05E3:0610
+
+Network
+=======
+Connection: Realtek 8851BE Wireless LAN WiFi 6 PCI-E NIC
+  IP addresses: 192.168.0.197, fe80::1
+  Subnet masks: 255.255.255.0, 64
+  Gateway: 192.168.0.1
+  DNS servers: 192.168.0.1
+  DHCP: Enabled
+  DHCP server: 192.168.0.1
+Adapters
+  Realtek 8851BE Wireless LAN WiFi 6 PCI-E NIC
+    Connection name: Wi-Fi 2
+    Status: Up
+    Link speed: 866.7 Mbps
+    Media: Native 802.11
+    MAC address: AC-36-1B-00-00-01
+    Driver version: 6001.16.181.0
+    Virtual: No
+  Realtek PCIe GbE Family Controller
+    Connection name: Ethernet 2
+    Status: Disconnected
+    Link speed: 0 bps
+    Media: 802.3
+    MAC address: 10-FF-E0-00-00-02
+    Driver version: 10.38.1009.2019
+    Virtual: No
+Wi-Fi
+  State: connected
+  SSID: ExampleNet
+  Radio type: 802.11ax
+  Band: 5 GHz
+  Channel: 157
+  Authentication: WPA2-Personal
+  Receive rate (Mbps): 866.7
+  Transmit rate (Mbps): 866.7
+  Signal: 98%
+Remote Desktop: Disabled
+Proxy: None
+Shared folders
+  Users: C:\Users
+
+Upgrade Advisor
+===============
+Memory
+  Installed: 48 GB of 128 GB supported
+  Slots: 4 of 4 used, 0 free
+  You can: All slots are full. To go past 48 GB, replace modules with larger DDR4 ones (up to 128 GB total).
+  Free speed: Modules are rated for 3200 MT/s but run at 2133 MT/s. Enabling the XMP or EXPO profile in the BIOS usually fixes this.
+Expansion slots
+  Slots: 3 total, 2 in use, 1 free
+  Free: J3708 PCIE x4 slot from Promontory: PCIe, x4 lanes
+  M.2 sockets: Windows cannot see empty M.2 sockets on this board; check the board manual.
+Storage
+  Drives: 1 × SATA HDD, 1 × SATA SSD, 1 × NVMe SSD
+  Replace first: A drive shows warning signs; see Storage. Back up before upgrading anything else.
+  Free ports: Windows does not report empty SATA ports or M.2 sockets; check the board manual.
+Board manual: Search for “Gigabyte Technology Co., Ltd. B550 EAGLE WIFI6 manual” for exact slot, lane-sharing and memory support rules.
+
+Device Problems
+===============
+Devices with problems: 1
+Base System Device: Code 28: Drivers are not installed
+  Device ID: PCI\VEN_1022&DEV_1234\3&1
+Not connected: 1
+  Xbox Wireless Adapter: Code 45: Not currently connected
+    Class: Net
+    Device ID: USB\VID_045E&PID_02FE\1
+
+Drivers & Firmware Age
+======================
+BIOS: 2024-11-18 (1 year old)
+Drivers older than 3 years: 2
+  Realtek PCIe GbE Family Controller: 10.38.1009.2019, 2019-10-09 (7 years old), Realtek
+  Realtek High Definition Audio: 6.0.9235.1, 2021-08-24 (5 years old), Realtek Semiconductor Corp.
+Third-party drivers: 3
+  display
+    NVIDIA GeForce GTX 1070 Ti: 32.0.15.8278, 2025-09-30 (1 year old), NVIDIA
+  media
+    Realtek High Definition Audio: 6.0.9235.1, 2021-08-24 (5 years old), Realtek Semiconductor Corp.
+  net
+    Realtek PCIe GbE Family Controller: 10.38.1009.2019, 2019-10-09 (7 years old), Realtek
+Updates: OpenPCManifest never downloads drivers. Use Windows Update or the device maker's site.
+
+Windows 11 Readiness
+====================
+Result: Already running Windows 11
+TPM: TPM 2.0 (AMD)
+Firmware: UEFI
+Secure Boot: On
+Processor: Likely supported (estimate)
+Memory: 47.9 GB (4 GB required)
+System drive: 405 GB (64 GB required)
+Secure Boot 2023 certificates: Updated
+
+About This Report
+=================
+Collected: 2026-11-15T19:04:44.0000000Z
+Generator: OpenPCManifest 0.1.0 (fixture)
+Windows PowerShell: 5.1.26100.7019
+Administrator: Yes
+SMBIOS version: 3.3

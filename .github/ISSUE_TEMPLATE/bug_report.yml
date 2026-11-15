@@ -1,0 +1,51 @@
+name: Bug report
+description: Something is missing, wrong or crashes.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. A redacted report makes most bugs quick to fix.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect to see, and what did you see instead?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: OpenPCManifest version
+      description: Shown in the title bar, or run `openpcmanifest --version`.
+      placeholder: OpenPCManifest 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 Pro 24H2, build 26100
+    validations:
+      required: true
+  - type: dropdown
+    id: admin
+    attributes:
+      label: Were you running as administrator?
+      options: ["No", "Yes", "Not sure"]
+  - type: textarea
+    id: report
+    attributes:
+      label: Redacted report
+      description: |
+        Run `openpcmanifest --text --redact --out report.txt` and paste the relevant part,
+        or attach the whole file. Redaction hides serial numbers, MAC and IP addresses,
+        names and product keys. Please do not attach raw snapshots here; they are not redacted.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and this is not a duplicate.
+          required: true

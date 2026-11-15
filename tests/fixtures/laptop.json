@@ -1,0 +1,87 @@
+{
+ "schema": 1,
+ "collectedAt": "2026-11-15T12:00:00.0000000Z",
+ "isAdmin": false,
+ "psVersion": "5.1.19041.1",
+ "os": [
+  {
+   "Caption": "Microsoft Windows 10 Home",
+   "BuildNumber": "19045",
+   "OSArchitecture": "64-bit",
+   "CSName": "LAPTOP-1",
+   "TotalVisibleMemorySize": 8000000,
+   "FreePhysicalMemory": 2000000
+  }
+ ],
+ "windowsVersion": {
+  "displayVersion": "22H2",
+  "ubr": 6456
+ },
+ "firmwareType": "Legacy",
+ "secureBoot": {
+  "enabled": null
+ },
+ "processor": [
+  {
+   "Name": "Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz",
+   "NumberOfCores": 2,
+   "NumberOfLogicalProcessors": 4,
+   "MaxClockSpeed": 2701
+  }
+ ],
+ "physicalMemory": [
+  {
+   "BankLabel": "BANK 0",
+   "DeviceLocator": "ChannelA-DIMM0",
+   "Capacity": 8589934592,
+   "Speed": 2133,
+   "ConfiguredClockSpeed": 2133,
+   "SMBIOSMemoryType": 26
+  }
+ ],
+ "memoryArray": [
+  {
+   "MemoryDevices": 2,
+   "MaxCapacity": 33554432
+  }
+ ],
+ "diskDrives": [
+  {
+   "Index": 0,
+   "Model": "SAMSUNG MZVLW256",
+   "Size": 256052966400,
+   "PNPDeviceID": "SCSI\\DISK&VEN_NVME&PROD_SAMSUNG\\1"
+  }
+ ],
+ "physicalDisks": [
+  {
+   "deviceId": "0",
+   "mediaType": "4",
+   "busType": "17",
+   "healthStatus": "0"
+  }
+ ],
+ "logicalDisks": [
+  {
+   "DeviceID": "C:",
+   "FileSystem": "NTFS",
+   "Size": 255000000000,
+   "FreeSpace": 12000000000
+  }
+ ],
+ "deviceProblems": [],
+ "errors": [
+  {
+   "source": "smbios",
+   "message": "Access denied"
+  },
+  {
+   "source": "tpm",
+   "message": "Access denied"
+  },
+  {
+   "source": "smartData",
+   "message": "Access denied"
+  }
+ ]
+}

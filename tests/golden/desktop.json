@@ -1,0 +1,2096 @@
+{
+  "schemaVersion": 1,
+  "generator": "OpenPCManifest 0.1.0 (fixture)",
+  "collectedAt": "2026-11-15T19:04:44.0000000Z",
+  "notes": [],
+  "sections": [
+    {
+      "id": "summary",
+      "title": "Summary",
+      "items": [
+        {
+          "key": "os",
+          "label": "Operating system",
+          "value": "Windows 11 Pro 64-bit (24H2, build 26100.7019)"
+        },
+        {
+          "key": "cpu",
+          "label": "CPU",
+          "value": "AMD Ryzen 5 3600 6-Core Processor (Matisse, 7 nm) — 6 cores / 12 threads"
+        },
+        {
+          "key": "ram",
+          "label": "RAM",
+          "value": "48 GB DDR4 dual-channel @ 2133 MT/s (1066 MHz) (4 of 4 slots used)"
+        },
+        {
+          "key": "motherboard",
+          "label": "Motherboard",
+          "value": "Gigabyte Technology Co., Ltd. B550 EAGLE WIFI6 (AM4)"
+        },
+        {
+          "key": "graphics",
+          "label": "Graphics",
+          "children": [
+            {
+              "key": "monitor",
+              "label": "Monitor",
+              "value": "LG HDR WQHD (3840 × 1600 @ 60 Hz, 32-bit)"
+            },
+            {
+              "key": "gpu",
+              "label": "GPU",
+              "value": "NVIDIA GeForce GTX 1070 Ti, 8 GB"
+            }
+          ]
+        },
+        {
+          "key": "storage",
+          "label": "Storage",
+          "children": [
+            {
+              "key": "drive",
+              "label": "Drive",
+              "value": "4 TB WDC WD40EZRZ-00GXCB0 (SATA HDD) — Good",
+              "status": "good"
+            },
+            {
+              "key": "drive",
+              "label": "Drive",
+              "value": "512 GB Crucial_CT512M550SSD1 (SATA SSD) — Caution",
+              "status": "caution"
+            },
+            {
+              "key": "drive",
+              "label": "Drive",
+              "value": "2.05 TB TEAM TM8FP6002T (NVMe SSD) — Good",
+              "status": "good"
+            }
+          ]
+        },
+        {
+          "key": "optical",
+          "label": "Optical",
+          "value": "HL-DT-ST DVD+-RW GHA2N"
+        },
+        {
+          "key": "audio",
+          "label": "Audio",
+          "value": "NVIDIA High Definition Audio, Realtek High Definition Audio, USB Audio Device"
+        },
+        {
+          "key": "network",
+          "label": "Network",
+          "value": "Realtek 8851BE Wireless LAN WiFi 6 PCI-E NIC"
+        }
+      ]
+    },
+    {
+      "id": "os",
+      "title": "Operating System",
+      "items": [
+        {
+          "key": "edition",
+          "label": "Edition",
+          "value": "Windows 11 Pro 64-bit"
+        },
+        {
+          "key": "version",
+          "label": "Version",
+          "value": "24H2"
+        },
+        {
+          "key": "build",
+          "label": "Build",
+          "value": "26100.7019"
+        },
+        {
+          "key": "installed",
+          "label": "Installed",
+          "value": "2024-12-30 (1 year old)"
+        },
+        {
+          "key": "last-boot",
+          "label": "Last boot",
+          "value": "2026-11-15 17:27 UTC"
+        },
+        {
+          "key": "uptime",
+          "label": "Uptime",
+          "value": "1 h 37 m"
+        },
+        {
+          "key": "computer-name",
+          "label": "Computer name",
+          "value": "EXAMPLE-PC",
+          "private": true
+        },
+        {
+          "key": "registered-user",
+          "label": "Registered user",
+          "value": "example-user",
+          "private": true
+        },
+        {
+          "key": "product-id",
+          "label": "Product ID",
+          "value": "00330-80000-00000-AA000",
+          "private": true
+        },
+        {
+          "key": "system-model",
+          "label": "System model",
+          "value": "Gigabyte Technology Co., Ltd. B550 EAGLE WIFI6"
+        },
+        {
+          "key": "workgroup",
+          "label": "Workgroup",
+          "value": "WORKGROUP",
+          "private": true
+        },
+        {
+          "key": "security",
+          "label": "Security",
+          "children": [
+            {
+              "key": "user-account-control",
+              "label": "User Account Control",
+              "value": "Enabled"
+            },
+            {
+              "key": "firewall-domain",
+              "label": "Firewall (Domain)",
+              "value": "On"
+            },
+            {
+              "key": "firewall-private",
+              "label": "Firewall (Private)",
+              "value": "On"
+            },
+            {
+              "key": "firewall-public",
+              "label": "Firewall (Public)",
+              "value": "On"
+            },
+            {
+              "key": "antivirus-windows-defender",
+              "label": "Antivirus: Windows Defender",
+              "value": "on, definitions up to date"
+            }
+          ]
+        },
+        {
+          "key": "runtimes",
+          "label": "Runtimes",
+          "children": [
+            {
+              "key": "net-framework",
+              "label": ".NET Framework",
+              "value": "4.8.09032"
+            },
+            {
+              "key": "windows-powershell",
+              "label": "Windows PowerShell",
+              "value": "5.1.26100.7019"
+            },
+            {
+              "key": "java",
+              "label": "Java",
+              "value": "8.0.2410.7"
+            }
+          ]
+        },
+        {
+          "key": "power-plan",
+          "label": "Power plan",
+          "value": "AMD Ryzen High Performance"
+        },
+        {
+          "key": "firmware",
+          "label": "Firmware",
+          "value": "UEFI"
+        },
+        {
+          "key": "time-zone",
+          "label": "Time zone",
+          "value": "(UTC-05:00) Eastern Time (US & Canada)"
+        },
+        {
+          "key": "locale",
+          "label": "Locale",
+          "value": "en-US"
+        },
+        {
+          "key": "installed-updates",
+          "label": "Installed updates",
+          "value": "2",
+          "children": [
+            {
+              "key": "KB5066835",
+              "label": "KB5066835",
+              "value": "Security Update, 2026-10-15"
+            },
+            {
+              "key": "KB5054156",
+              "label": "KB5054156",
+              "value": "Update, 2026-04-10"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cpu",
+      "title": "CPU",
+      "items": [
+        {
+          "key": "name",
+          "label": "Name",
+          "value": "AMD Ryzen 5 3600 6-Core Processor"
+        },
+        {
+          "key": "code-name",
+          "label": "Code name",
+          "value": "Matisse"
+        },
+        {
+          "key": "technology",
+          "label": "Technology",
+          "value": "7 nm"
+        },
+        {
+          "key": "cores",
+          "label": "Cores",
+          "value": "6"
+        },
+        {
+          "key": "threads",
+          "label": "Threads",
+          "value": "12"
+        },
+        {
+          "key": "socket",
+          "label": "Socket",
+          "value": "AM4"
+        },
+        {
+          "key": "base-clock",
+          "label": "Base clock",
+          "value": "3600 MHz"
+        },
+        {
+          "key": "vendor",
+          "label": "Vendor",
+          "value": "AuthenticAMD"
+        },
+        {
+          "key": "family-model-stepping",
+          "label": "Family / model / stepping",
+          "value": "17h / 71h / 0"
+        },
+        {
+          "key": "cpuid-fields",
+          "label": "CPUID fields",
+          "value": "family F, extended family 8, model 1, extended model 7"
+        },
+        {
+          "key": "instructions",
+          "label": "Instructions",
+          "value": "MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, SSE4A, AES, PCLMULQDQ, AVX, FMA3, F16C, RDRAND, AVX2, BMI1, BMI2, ADX, SHA, x86-64, NX"
+        },
+        {
+          "key": "virtualization",
+          "label": "Virtualization",
+          "value": "AMD-V, in use by the Windows hypervisor"
+        },
+        {
+          "key": "simultaneous-multithreading",
+          "label": "Simultaneous multithreading",
+          "value": "Supported, enabled"
+        },
+        {
+          "key": "caches",
+          "label": "Caches",
+          "children": [
+            {
+              "key": "l1-data",
+              "label": "L1 data",
+              "value": "6 × 32 KB, 8-way"
+            },
+            {
+              "key": "l1-instruction",
+              "label": "L1 instruction",
+              "value": "6 × 32 KB, 8-way"
+            },
+            {
+              "key": "l2-unified",
+              "label": "L2 unified",
+              "value": "6 × 512 KB, 8-way"
+            },
+            {
+              "key": "l3-unified",
+              "label": "L3 unified",
+              "value": "2 × 16 MB, 16-way"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ram",
+      "title": "RAM",
+      "items": [
+        {
+          "key": "memory-slots",
+          "label": "Memory slots",
+          "children": [
+            {
+              "key": "total",
+              "label": "Total",
+              "value": "4"
+            },
+            {
+              "key": "used",
+              "label": "Used",
+              "value": "4"
+            },
+            {
+              "key": "free",
+              "label": "Free",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "key": "installed",
+          "label": "Installed",
+          "value": "48 GB"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "value": "DDR4"
+        },
+        {
+          "key": "channels-estimated",
+          "label": "Channels (estimated)",
+          "value": "Dual"
+        },
+        {
+          "key": "speed",
+          "label": "Speed",
+          "value": "2133 MT/s (1066 MHz)"
+        },
+        {
+          "key": "rated-speed",
+          "label": "Rated speed",
+          "value": "3200 MT/s — modules run slower than rated",
+          "status": "caution"
+        },
+        {
+          "key": "maximum-supported",
+          "label": "Maximum supported",
+          "value": "128 GB"
+        },
+        {
+          "key": "usage",
+          "label": "Usage",
+          "children": [
+            {
+              "key": "usable",
+              "label": "Usable",
+              "value": "47.9 GB"
+            },
+            {
+              "key": "available",
+              "label": "Available",
+              "value": "33 GB"
+            },
+            {
+              "key": "in-use",
+              "label": "In use",
+              "value": "31%"
+            }
+          ]
+        },
+        {
+          "key": "modules",
+          "label": "Modules",
+          "children": [
+            {
+              "key": "slot-dimm-0-p0-channel-a",
+              "label": "Slot DIMM 0 (P0 CHANNEL A)",
+              "children": [
+                {
+                  "key": "size",
+                  "label": "Size",
+                  "value": "8 GB"
+                },
+                {
+                  "key": "type",
+                  "label": "Type",
+                  "value": "DDR4"
+                },
+                {
+                  "key": "manufacturer",
+                  "label": "Manufacturer",
+                  "value": "G Skill Intl"
+                },
+                {
+                  "key": "part-number",
+                  "label": "Part number",
+                  "value": "F4-3200C16-8GVK"
+                },
+                {
+                  "key": "rated-speed",
+                  "label": "Rated speed",
+                  "value": "3200 MT/s"
+                },
+                {
+                  "key": "configured-speed",
+                  "label": "Configured speed",
+                  "value": "2133 MT/s"
+                },
+                {
+                  "key": "voltage",
+                  "label": "Voltage",
+                  "value": "1.35 V"
+                },
+                {
+                  "key": "form-factor",
+                  "label": "Form factor",
+                  "value": "DIMM"
+                },
+                {
+                  "key": "ranks",
+                  "label": "Ranks",
+                  "value": "2"
+                }
+              ]
+            },
+            {
+              "key": "slot-dimm-1-p0-channel-a",
+              "label": "Slot DIMM 1 (P0 CHANNEL A)",
+              "children": [
+                {
+                  "key": "size",
+                  "label": "Size",
+                  "value": "16 GB"
+                },
+                {
+                  "key": "type",
+                  "label": "Type",
+                  "value": "DDR4"
+                },
+                {
+                  "key": "manufacturer",
+                  "label": "Manufacturer",
+                  "value": "G Skill Intl"
+                },
+                {
+                  "key": "part-number",
+                  "label": "Part number",
+                  "value": "F4-3200C16-16GVK"
+                },
+                {
+                  "key": "rated-speed",
+                  "label": "Rated speed",
+                  "value": "3200 MT/s"
+                },
+                {
+                  "key": "configured-speed",
+                  "label": "Configured speed",
+                  "value": "2133 MT/s"
+                },
+                {
+                  "key": "voltage",
+                  "label": "Voltage",
+                  "value": "1.35 V"
+                },
+                {
+                  "key": "form-factor",
+                  "label": "Form factor",
+                  "value": "DIMM"
+                },
+                {
+                  "key": "ranks",
+                  "label": "Ranks",
+                  "value": "2"
+                }
+              ]
+            },
+            {
+              "key": "slot-dimm-0-p0-channel-b",
+              "label": "Slot DIMM 0 (P0 CHANNEL B)",
+              "children": [
+                {
+                  "key": "size",
+                  "label": "Size",
+                  "value": "8 GB"
+                },
+                {
+                  "key": "type",
+                  "label": "Type",
+                  "value": "DDR4"
+                },
+                {
+                  "key": "manufacturer",
+                  "label": "Manufacturer",
+                  "value": "G Skill Intl"
+                },
+                {
+                  "key": "part-number",
+                  "label": "Part number",
+                  "value": "F4-3200C16-8GVK"
+                },
+                {
+                  "key": "rated-speed",
+                  "label": "Rated speed",
+                  "value": "3200 MT/s"
+                },
+                {
+                  "key": "configured-speed",
+                  "label": "Configured speed",
+                  "value": "2133 MT/s"
+                },
+                {
+                  "key": "voltage",
+                  "label": "Voltage",
+                  "value": "1.35 V"
+                },
+                {
+                  "key": "form-factor",
+                  "label": "Form factor",
+                  "value": "DIMM"
+                },
+                {
+                  "key": "ranks",
+                  "label": "Ranks",
+                  "value": "2"
+                }
+              ]
+            },
+            {
+              "key": "slot-dimm-1-p0-channel-b",
+              "label": "Slot DIMM 1 (P0 CHANNEL B)",
+              "children": [
+                {
+                  "key": "size",
+                  "label": "Size",
+                  "value": "16 GB"
+                },
+                {
+                  "key": "type",
+                  "label": "Type",
+                  "value": "DDR4"
+                },
+                {
+                  "key": "manufacturer",
+                  "label": "Manufacturer",
+                  "value": "G Skill Intl"
+                },
+                {
+                  "key": "part-number",
+                  "label": "Part number",
+                  "value": "F4-3200C16-16GVK"
+                },
+                {
+                  "key": "rated-speed",
+                  "label": "Rated speed",
+                  "value": "3200 MT/s"
+                },
+                {
+                  "key": "configured-speed",
+                  "label": "Configured speed",
+                  "value": "2133 MT/s"
+                },
+                {
+                  "key": "voltage",
+                  "label": "Voltage",
+                  "value": "1.35 V"
+                },
+                {
+                  "key": "form-factor",
+                  "label": "Form factor",
+                  "value": "DIMM"
+                },
+                {
+                  "key": "ranks",
+                  "label": "Ranks",
+                  "value": "2"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "motherboard",
+      "title": "Motherboard",
+      "items": [
+        {
+          "key": "manufacturer",
+          "label": "Manufacturer",
+          "value": "Gigabyte Technology Co., Ltd."
+        },
+        {
+          "key": "model",
+          "label": "Model",
+          "value": "B550 EAGLE WIFI6"
+        },
+        {
+          "key": "version",
+          "label": "Version",
+          "value": "x.x"
+        },
+        {
+          "key": "system",
+          "label": "System",
+          "value": "Gigabyte Technology Co., Ltd. B550 EAGLE WIFI6"
+        },
+        {
+          "key": "bios",
+          "label": "BIOS",
+          "children": [
+            {
+              "key": "vendor",
+              "label": "Vendor",
+              "value": "American Megatrends International, LLC."
+            },
+            {
+              "key": "version",
+              "label": "Version",
+              "value": "F1"
+            },
+            {
+              "key": "date",
+              "label": "Date",
+              "value": "2024-11-18 (1 year old)"
+            }
+          ]
+        },
+        {
+          "key": "expansion-slots",
+          "label": "Expansion slots",
+          "children": [
+            {
+              "key": "j10",
+              "label": "J10",
+              "value": "In use",
+              "children": [
+                {
+                  "key": "type",
+                  "label": "Type",
+                  "value": "PCIe"
+                },
+                {
+                  "key": "lanes",
+                  "label": "Lanes",
+                  "value": "x16"
+                },
+                {
+                  "key": "characteristics",
+                  "label": "Characteristics",
+                  "value": "3.3 V, PME"
+                },
+                {
+                  "key": "slot-number",
+                  "label": "Slot number",
+                  "value": "0"
+                }
+              ]
+            },
+            {
+              "key": "j3700-m-2-slot",
+              "label": "J3700 M.2 Slot",
+              "value": "In use",
+              "children": [
+                {
+                  "key": "type",
+                  "label": "Type",
+                  "value": "PCIe x1"
+                },
+                {
+                  "key": "lanes",
+                  "label": "Lanes",
+                  "value": "x1"
+                },
+                {
+                  "key": "characteristics",
+                  "label": "Characteristics",
+                  "value": "3.3 V, PME"
+                },
+                {
+                  "key": "slot-number",
+                  "label": "Slot number",
+                  "value": "1"
+                }
+              ]
+            },
+            {
+              "key": "j3708-pcie-x4-slot-from-promontory",
+              "label": "J3708 PCIE x4 slot from Promontory",
+              "value": "Available",
+              "status": "good",
+              "children": [
+                {
+                  "key": "type",
+                  "label": "Type",
+                  "value": "PCIe"
+                },
+                {
+                  "key": "lanes",
+                  "label": "Lanes",
+                  "value": "x4"
+                },
+                {
+                  "key": "characteristics",
+                  "label": "Characteristics",
+                  "value": "3.3 V, PME"
+                },
+                {
+                  "key": "slot-number",
+                  "label": "Slot number",
+                  "value": "2"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "graphics",
+      "title": "Graphics",
+      "items": [
+        {
+          "key": "monitor",
+          "label": "Monitor",
+          "value": "LG HDR WQHD",
+          "children": [
+            {
+              "key": "manufacturer",
+              "label": "Manufacturer",
+              "value": "LG (GSM)"
+            },
+            {
+              "key": "product-code",
+              "label": "Product code",
+              "value": "7714"
+            },
+            {
+              "key": "serial-number",
+              "label": "Serial number",
+              "value": "112NTAB12345",
+              "private": true
+            },
+            {
+              "key": "manufactured",
+              "label": "Manufactured",
+              "value": "Week 23, 2021"
+            },
+            {
+              "key": "screen-size",
+              "label": "Screen size",
+              "value": "34 in (80 × 34 cm)"
+            },
+            {
+              "key": "input",
+              "label": "Input",
+              "value": "Digital"
+            }
+          ]
+        },
+        {
+          "key": "nvidia-geforce-gtx-1070-ti",
+          "label": "NVIDIA GeForce GTX 1070 Ti",
+          "children": [
+            {
+              "key": "vendor",
+              "label": "Vendor",
+              "value": "NVIDIA"
+            },
+            {
+              "key": "video-memory",
+              "label": "Video memory",
+              "value": "8 GB"
+            },
+            {
+              "key": "processor",
+              "label": "Processor",
+              "value": "NVIDIA GeForce GTX 1070 Ti"
+            },
+            {
+              "key": "device-id",
+              "label": "Device ID",
+              "value": "10DE-1B82"
+            },
+            {
+              "key": "card-maker",
+              "label": "Card maker",
+              "value": "EVGA (3842)"
+            },
+            {
+              "key": "subsystem-id",
+              "label": "Subsystem ID",
+              "value": "66733842"
+            },
+            {
+              "key": "revision",
+              "label": "Revision",
+              "value": "A1"
+            },
+            {
+              "key": "current-mode",
+              "label": "Current mode",
+              "value": "3840 × 1600 @ 60 Hz, 32-bit"
+            },
+            {
+              "key": "driver-version",
+              "label": "Driver version",
+              "value": "32.0.15.8278"
+            },
+            {
+              "key": "driver-date",
+              "label": "Driver date",
+              "value": "2025-09-30 (1 year old)"
+            },
+            {
+              "key": "status",
+              "label": "Status",
+              "value": "OK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "storage",
+      "title": "Storage",
+      "items": [
+        {
+          "key": "disk-0",
+          "label": "WDC WD40EZRZ-00GXCB0",
+          "children": [
+            {
+              "key": "capacity",
+              "label": "Capacity",
+              "value": "4 TB"
+            },
+            {
+              "key": "exact-size",
+              "label": "Exact size",
+              "value": "4000784417280 bytes"
+            },
+            {
+              "key": "interface",
+              "label": "Interface",
+              "value": "SATA"
+            },
+            {
+              "key": "type",
+              "label": "Type",
+              "value": "HDD"
+            },
+            {
+              "key": "speed",
+              "label": "Speed",
+              "value": "5400 RPM"
+            },
+            {
+              "key": "firmware",
+              "label": "Firmware",
+              "value": "80.00A80"
+            },
+            {
+              "key": "serial-number",
+              "label": "Serial number",
+              "value": "WD-WCC7K0000001",
+              "private": true
+            },
+            {
+              "key": "health",
+              "label": "Health",
+              "value": "Good",
+              "status": "good"
+            },
+            {
+              "key": "usage",
+              "label": "Usage",
+              "children": [
+                {
+                  "key": "temperature",
+                  "label": "Temperature",
+                  "value": "35 °C"
+                },
+                {
+                  "key": "power-on-time",
+                  "label": "Power-on time",
+                  "value": "26098 h (3.0 years)"
+                },
+                {
+                  "key": "power-cycles",
+                  "label": "Power cycles",
+                  "value": "408"
+                }
+              ]
+            },
+            {
+              "key": "smart-attributes",
+              "label": "SMART attributes",
+              "value": "15",
+              "children": [
+                {
+                  "key": "attr-01",
+                  "label": "01 Read Error Rate",
+                  "value": "raw 0 · value 200 · worst 200 · threshold 51"
+                },
+                {
+                  "key": "attr-03",
+                  "label": "03 Spin-Up Time",
+                  "value": "raw 5716 · value 185 · worst 165 · threshold 21"
+                },
+                {
+                  "key": "attr-04",
+                  "label": "04 Start/Stop Count",
+                  "value": "raw 1065 · value 99 · worst 99 · threshold –"
+                },
+                {
+                  "key": "attr-05",
+                  "label": "05 Reallocated Sectors Count",
+                  "value": "raw 0 · value 200 · worst 200 · threshold 140"
+                },
+                {
+                  "key": "attr-07",
+                  "label": "07 Seek Error Rate",
+                  "value": "raw 0 · value 200 · worst 200 · threshold –"
+                },
+                {
+                  "key": "attr-09",
+                  "label": "09 Power-On Hours",
+                  "value": "raw 26098 h · value 65 · worst 63 · threshold 0"
+                },
+                {
+                  "key": "attr-0a",
+                  "label": "0A Spin Retry Count",
+                  "value": "raw 0 · value 100 · worst 100 · threshold –"
+                },
+                {
+                  "key": "attr-0c",
+                  "label": "0C Power Cycle Count",
+                  "value": "raw 408 · value 100 · worst 100 · threshold –"
+                },
+                {
+                  "key": "attr-c0",
+                  "label": "C0 Power-off Retract Count",
+                  "value": "raw 67 · value 200 · worst 200 · threshold –"
+                },
+                {
+                  "key": "attr-c1",
+                  "label": "C1 Load/Unload Cycle Count",
+                  "value": "raw 38326 · value 188 · worst 188 · threshold –"
+                },
+                {
+                  "key": "attr-c2",
+                  "label": "C2 Temperature",
+                  "value": "raw 35 °C · value 115 · worst 104 · threshold –"
+                },
+                {
+                  "key": "attr-c4",
+                  "label": "C4 Reallocation Event Count",
+                  "value": "raw 0 · value 200 · worst 200 · threshold –"
+                },
+                {
+                  "key": "attr-c5",
+                  "label": "C5 Current Pending Sector Count",
+                  "value": "raw 0 · value 200 · worst 200 · threshold –"
+                },
+                {
+                  "key": "attr-c6",
+                  "label": "C6 Uncorrectable Sector Count",
+                  "value": "raw 0 · value 200 · worst 200 · threshold –"
+                },
+                {
+                  "key": "attr-c7",
+                  "label": "C7 UltraDMA CRC Error Count",
+                  "value": "raw 0 · value 200 · worst 200 · threshold –"
+                }
+              ]
+            },
+            {
+              "key": "partitions",
+              "label": "Partitions",
+              "children": [
+                {
+                  "key": "partition-1",
+                  "label": "Partition 1",
+                  "children": [
+                    {
+                      "key": "type",
+                      "label": "Type",
+                      "value": "Reserved"
+                    },
+                    {
+                      "key": "size",
+                      "label": "Size",
+                      "value": "16.8 MB"
+                    }
+                  ]
+                },
+                {
+                  "key": "partition-2",
+                  "label": "Partition 2 (G:)",
+                  "children": [
+                    {
+                      "key": "type",
+                      "label": "Type",
+                      "value": "Basic"
+                    },
+                    {
+                      "key": "size",
+                      "label": "Size",
+                      "value": "4 TB"
+                    },
+                    {
+                      "key": "file-system",
+                      "label": "File system",
+                      "value": "NTFS"
+                    },
+                    {
+                      "key": "label",
+                      "label": "Label",
+                      "value": "Archive"
+                    },
+                    {
+                      "key": "free-space",
+                      "label": "Free space",
+                      "value": "1.20 TB (30%)"
+                    },
+                    {
+                      "key": "volume-serial",
+                      "label": "Volume serial",
+                      "value": "1A2B3C4D",
+                      "private": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "disk-2",
+          "label": "Crucial_CT512M550SSD1",
+          "children": [
+            {
+              "key": "capacity",
+              "label": "Capacity",
+              "value": "512 GB"
+            },
+            {
+              "key": "exact-size",
+              "label": "Exact size",
+              "value": "512105932800 bytes"
+            },
+            {
+              "key": "interface",
+              "label": "Interface",
+              "value": "SATA"
+            },
+            {
+              "key": "type",
+              "label": "Type",
+              "value": "SSD"
+            },
+            {
+              "key": "firmware",
+              "label": "Firmware",
+              "value": "MU01"
+            },
+            {
+              "key": "serial-number",
+              "label": "Serial number",
+              "value": "14230C000000",
+              "private": true
+            },
+            {
+              "key": "health",
+              "label": "Health",
+              "value": "Caution: 16 reallocation events",
+              "status": "caution"
+            },
+            {
+              "key": "usage",
+              "label": "Usage",
+              "children": [
+                {
+                  "key": "temperature",
+                  "label": "Temperature",
+                  "value": "37 °C"
+                },
+                {
+                  "key": "power-on-time",
+                  "label": "Power-on time",
+                  "value": "50877 h (5.8 years)"
+                },
+                {
+                  "key": "power-cycles",
+                  "label": "Power cycles",
+                  "value": "1483"
+                }
+              ]
+            },
+            {
+              "key": "smart-attributes",
+              "label": "SMART attributes",
+              "value": "9",
+              "children": [
+                {
+                  "key": "attr-01",
+                  "label": "01 Read Error Rate",
+                  "value": "raw 0 · value 100 · worst 100 · threshold –"
+                },
+                {
+                  "key": "attr-05",
+                  "label": "05 Reallocated Sectors Count",
+                  "value": "raw 0 · value 100 · worst 100 · threshold –"
+                },
+                {
+                  "key": "attr-09",
+                  "label": "09 Power-On Hours",
+                  "value": "raw 50877 h · value 100 · worst 100 · threshold –"
+                },
+                {
+                  "key": "attr-0c",
+                  "label": "0C Power Cycle Count",
+                  "value": "raw 1483 · value 100 · worst 100 · threshold –"
+                },
+                {
+                  "key": "attr-ad",
+                  "label": "AD Wear Leveling Count",
+                  "value": "raw 574 · value 81 · worst 81 · threshold –"
+                },
+                {
+                  "key": "attr-c2",
+                  "label": "C2 Temperature",
+                  "value": "raw 37 °C · value 63 · worst 47 · threshold –"
+                },
+                {
+                  "key": "attr-c4",
+                  "label": "C4 Reallocation Event Count",
+                  "value": "raw 16 · value 100 · worst 100 · threshold –"
+                },
+                {
+                  "key": "attr-c5",
+                  "label": "C5 Current Pending Sector Count",
+                  "value": "raw 0 · value 100 · worst 100 · threshold –"
+                },
+                {
+                  "key": "attr-c6",
+                  "label": "C6 Uncorrectable Sector Count",
+                  "value": "raw 0 · value 100 · worst 100 · threshold –"
+                }
+              ]
+            },
+            {
+              "key": "partitions",
+              "label": "Partitions",
+              "children": [
+                {
+                  "key": "partition-1",
+                  "label": "Partition 1",
+                  "children": [
+                    {
+                      "key": "type",
+                      "label": "Type",
+                      "value": "System"
+                    },
+                    {
+                      "key": "size",
+                      "label": "Size",
+                      "value": "105 MB"
+                    }
+                  ]
+                },
+                {
+                  "key": "partition-2",
+                  "label": "Partition 2 (C:)",
+                  "children": [
+                    {
+                      "key": "type",
+                      "label": "Type",
+                      "value": "Basic"
+                    },
+                    {
+                      "key": "size",
+                      "label": "Size",
+                      "value": "405 GB"
+                    },
+                    {
+                      "key": "file-system",
+                      "label": "File system",
+                      "value": "NTFS"
+                    },
+                    {
+                      "key": "free-space",
+                      "label": "Free space",
+                      "value": "54.7 GB (14%)"
+                    },
+                    {
+                      "key": "volume-serial",
+                      "label": "Volume serial",
+                      "value": "6E074469",
+                      "private": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "disk-3",
+          "label": "TEAM TM8FP6002T",
+          "children": [
+            {
+              "key": "capacity",
+              "label": "Capacity",
+              "value": "2.05 TB"
+            },
+            {
+              "key": "exact-size",
+              "label": "Exact size",
+              "value": "2048407280640 bytes"
+            },
+            {
+              "key": "interface",
+              "label": "Interface",
+              "value": "NVMe"
+            },
+            {
+              "key": "type",
+              "label": "Type",
+              "value": "SSD"
+            },
+            {
+              "key": "firmware",
+              "label": "Firmware",
+              "value": "VC2S038E"
+            },
+            {
+              "key": "serial-number",
+              "label": "Serial number",
+              "value": "TPBF0000000000000001",
+              "private": true
+            },
+            {
+              "key": "health",
+              "label": "Health",
+              "value": "Good",
+              "status": "good"
+            },
+            {
+              "key": "usage",
+              "label": "Usage",
+              "children": [
+                {
+                  "key": "temperature",
+                  "label": "Temperature",
+                  "value": "38 °C"
+                },
+                {
+                  "key": "power-on-time",
+                  "label": "Power-on time",
+                  "value": "9120 h (1.0 years)"
+                },
+                {
+                  "key": "endurance-used",
+                  "label": "Endurance used",
+                  "value": "12%"
+                }
+              ]
+            },
+            {
+              "key": "partitions",
+              "label": "Partitions",
+              "children": [
+                {
+                  "key": "partition-1",
+                  "label": "Partition 1 (B:)",
+                  "children": [
+                    {
+                      "key": "type",
+                      "label": "Type",
+                      "value": "Basic"
+                    },
+                    {
+                      "key": "size",
+                      "label": "Size",
+                      "value": "2.05 TB"
+                    },
+                    {
+                      "key": "file-system",
+                      "label": "File system",
+                      "value": "NTFS"
+                    },
+                    {
+                      "key": "label",
+                      "label": "Label",
+                      "value": "Games"
+                    },
+                    {
+                      "key": "free-space",
+                      "label": "Free space",
+                      "value": "1.29 TB (63%)"
+                    },
+                    {
+                      "key": "volume-serial",
+                      "label": "Volume serial",
+                      "value": "04A3AF20",
+                      "private": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "optical",
+      "title": "Optical Drives",
+      "items": [
+        {
+          "key": "hl-dt-st-dvd-rw-gha2n",
+          "label": "HL-DT-ST DVD+-RW GHA2N",
+          "children": [
+            {
+              "key": "drive-letter",
+              "label": "Drive letter",
+              "value": "E:"
+            },
+            {
+              "key": "type",
+              "label": "Type",
+              "value": "DVD Writer"
+            },
+            {
+              "key": "media-loaded",
+              "label": "Media loaded",
+              "value": "No"
+            },
+            {
+              "key": "capabilities",
+              "label": "Capabilities",
+              "value": "Random Access, Supports Writing, Supports Removable Media"
+            },
+            {
+              "key": "scsi-address",
+              "label": "SCSI address",
+              "value": "bus 3, target 0, LUN 0"
+            },
+            {
+              "key": "status",
+              "label": "Status",
+              "value": "OK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audio",
+      "title": "Audio",
+      "items": [
+        {
+          "key": "sound-devices",
+          "label": "Sound devices",
+          "children": [
+            {
+              "key": "nvidia-high-definition-audio",
+              "label": "NVIDIA High Definition Audio",
+              "value": "NVIDIA, OK"
+            },
+            {
+              "key": "realtek-high-definition-audio",
+              "label": "Realtek High Definition Audio",
+              "value": "Realtek, OK"
+            },
+            {
+              "key": "usb-audio-device",
+              "label": "USB Audio Device",
+              "value": "(Generic USB Audio), OK"
+            }
+          ]
+        },
+        {
+          "key": "playback-and-recording-endpoints",
+          "label": "Playback and recording endpoints",
+          "children": [
+            {
+              "key": "speakers-realtek-r-audio",
+              "label": "Speakers (Realtek(R) Audio)",
+              "value": "OK"
+            },
+            {
+              "key": "microphone-usb-audio-device",
+              "label": "Microphone (USB Audio Device)",
+              "value": "OK"
+            },
+            {
+              "key": "lg-hdr-wqhd-nvidia-high-definition-audio",
+              "label": "LG HDR WQHD (NVIDIA High Definition Audio)",
+              "value": "OK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peripherals",
+      "title": "Peripherals",
+      "items": [
+        {
+          "key": "keyboards",
+          "label": "Keyboards",
+          "children": [
+            {
+              "key": "hid-keyboard-device",
+              "label": "HID Keyboard Device",
+              "value": "Bluetooth LE"
+            }
+          ]
+        },
+        {
+          "key": "pointing-devices",
+          "label": "Pointing devices",
+          "children": [
+            {
+              "key": "hid-compliant-mouse",
+              "label": "HID-compliant mouse",
+              "value": "Logitech, USB"
+            }
+          ]
+        },
+        {
+          "key": "printers",
+          "label": "Printers",
+          "children": [
+            {
+              "key": "brother-hl-l2350dw-series-default",
+              "label": "Brother HL-L2350DW series (default)",
+              "children": [
+                {
+                  "key": "driver",
+                  "label": "Driver",
+                  "value": "Brother HL-L2350DW series"
+                },
+                {
+                  "key": "port",
+                  "label": "Port",
+                  "value": "BRW8CC84B000000",
+                  "private": true
+                },
+                {
+                  "key": "network-printer",
+                  "label": "Network printer",
+                  "value": "Yes"
+                },
+                {
+                  "key": "shared",
+                  "label": "Shared",
+                  "value": "No"
+                }
+              ]
+            },
+            {
+              "key": "microsoft-print-to-pdf",
+              "label": "Microsoft Print to PDF",
+              "children": [
+                {
+                  "key": "driver",
+                  "label": "Driver",
+                  "value": "Microsoft Print To PDF"
+                },
+                {
+                  "key": "port",
+                  "label": "Port",
+                  "value": "PORTPROMPT:",
+                  "private": true
+                },
+                {
+                  "key": "network-printer",
+                  "label": "Network printer",
+                  "value": "No"
+                },
+                {
+                  "key": "shared",
+                  "label": "Shared",
+                  "value": "No"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "usb",
+      "title": "USB",
+      "items": [
+        {
+          "key": "controllers",
+          "label": "Controllers",
+          "children": [
+            {
+              "key": "amd-usb-3-10-extensible-host-controller-1-10-microsoft",
+              "label": "AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft)",
+              "value": "Advanced Micro Devices"
+            }
+          ]
+        },
+        {
+          "key": "hidclass",
+          "label": "HIDClass",
+          "value": "1",
+          "children": [
+            {
+              "key": "logitech-usb-input-device",
+              "label": "Logitech USB Input Device",
+              "value": "Logitech, ID 046D:C52B"
+            }
+          ]
+        },
+        {
+          "key": "usb",
+          "label": "USB",
+          "value": "2",
+          "children": [
+            {
+              "key": "usb-composite-device",
+              "label": "USB Composite Device",
+              "value": "(Standard USB Host Controller), ID 046D:0A87"
+            },
+            {
+              "key": "generic-usb-hub",
+              "label": "Generic USB Hub",
+              "value": "(Standard USB HUBs), ID 05E3:0610"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "network",
+      "title": "Network",
+      "items": [
+        {
+          "key": "connection-realtek-8851be-wireless-lan-wifi-6-pci-e-nic",
+          "label": "Connection: Realtek 8851BE Wireless LAN WiFi 6 PCI-E NIC",
+          "children": [
+            {
+              "key": "ip-addresses",
+              "label": "IP addresses",
+              "value": "192.168.0.197, fe80::1",
+              "private": true
+            },
+            {
+              "key": "subnet-masks",
+              "label": "Subnet masks",
+              "value": "255.255.255.0, 64"
+            },
+            {
+              "key": "gateway",
+              "label": "Gateway",
+              "value": "192.168.0.1",
+              "private": true
+            },
+            {
+              "key": "dns-servers",
+              "label": "DNS servers",
+              "value": "192.168.0.1",
+              "private": true
+            },
+            {
+              "key": "dhcp",
+              "label": "DHCP",
+              "value": "Enabled"
+            },
+            {
+              "key": "dhcp-server",
+              "label": "DHCP server",
+              "value": "192.168.0.1",
+              "private": true
+            }
+          ]
+        },
+        {
+          "key": "adapters",
+          "label": "Adapters",
+          "children": [
+            {
+              "key": "realtek-8851be-wireless-lan-wifi-6-pci-e-nic",
+              "label": "Realtek 8851BE Wireless LAN WiFi 6 PCI-E NIC",
+              "children": [
+                {
+                  "key": "connection-name",
+                  "label": "Connection name",
+                  "value": "Wi-Fi 2"
+                },
+                {
+                  "key": "status",
+                  "label": "Status",
+                  "value": "Up"
+                },
+                {
+                  "key": "link-speed",
+                  "label": "Link speed",
+                  "value": "866.7 Mbps"
+                },
+                {
+                  "key": "media",
+                  "label": "Media",
+                  "value": "Native 802.11"
+                },
+                {
+                  "key": "mac-address",
+                  "label": "MAC address",
+                  "value": "AC-36-1B-00-00-01",
+                  "private": true
+                },
+                {
+                  "key": "driver-version",
+                  "label": "Driver version",
+                  "value": "6001.16.181.0"
+                },
+                {
+                  "key": "virtual",
+                  "label": "Virtual",
+                  "value": "No"
+                }
+              ]
+            },
+            {
+              "key": "realtek-pcie-gbe-family-controller",
+              "label": "Realtek PCIe GbE Family Controller",
+              "children": [
+                {
+                  "key": "connection-name",
+                  "label": "Connection name",
+                  "value": "Ethernet 2"
+                },
+                {
+                  "key": "status",
+                  "label": "Status",
+                  "value": "Disconnected"
+                },
+                {
+                  "key": "link-speed",
+                  "label": "Link speed",
+                  "value": "0 bps"
+                },
+                {
+                  "key": "media",
+                  "label": "Media",
+                  "value": "802.3"
+                },
+                {
+                  "key": "mac-address",
+                  "label": "MAC address",
+                  "value": "10-FF-E0-00-00-02",
+                  "private": true
+                },
+                {
+                  "key": "driver-version",
+                  "label": "Driver version",
+                  "value": "10.38.1009.2019"
+                },
+                {
+                  "key": "virtual",
+                  "label": "Virtual",
+                  "value": "No"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "wi-fi",
+          "label": "Wi-Fi",
+          "children": [
+            {
+              "key": "state",
+              "label": "State",
+              "value": "connected"
+            },
+            {
+              "key": "ssid",
+              "label": "SSID",
+              "value": "ExampleNet",
+              "private": true
+            },
+            {
+              "key": "radio-type",
+              "label": "Radio type",
+              "value": "802.11ax"
+            },
+            {
+              "key": "band",
+              "label": "Band",
+              "value": "5 GHz"
+            },
+            {
+              "key": "channel",
+              "label": "Channel",
+              "value": "157"
+            },
+            {
+              "key": "authentication",
+              "label": "Authentication",
+              "value": "WPA2-Personal"
+            },
+            {
+              "key": "receive-rate-mbps",
+              "label": "Receive rate (Mbps)",
+              "value": "866.7"
+            },
+            {
+              "key": "transmit-rate-mbps",
+              "label": "Transmit rate (Mbps)",
+              "value": "866.7"
+            },
+            {
+              "key": "signal",
+              "label": "Signal",
+              "value": "98%"
+            }
+          ]
+        },
+        {
+          "key": "remote-desktop",
+          "label": "Remote Desktop",
+          "value": "Disabled"
+        },
+        {
+          "key": "proxy",
+          "label": "Proxy",
+          "value": "None"
+        },
+        {
+          "key": "shared-folders",
+          "label": "Shared folders",
+          "children": [
+            {
+              "key": "users",
+              "label": "Users",
+              "value": "C:\\Users",
+              "private": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "upgrade",
+      "title": "Upgrade Advisor",
+      "items": [
+        {
+          "key": "memory",
+          "label": "Memory",
+          "children": [
+            {
+              "key": "installed",
+              "label": "Installed",
+              "value": "48 GB of 128 GB supported"
+            },
+            {
+              "key": "slots",
+              "label": "Slots",
+              "value": "4 of 4 used, 0 free"
+            },
+            {
+              "key": "you-can",
+              "label": "You can",
+              "value": "All slots are full. To go past 48 GB, replace modules with larger DDR4 ones (up to 128 GB total).",
+              "status": "note"
+            },
+            {
+              "key": "free-speed",
+              "label": "Free speed",
+              "value": "Modules are rated for 3200 MT/s but run at 2133 MT/s. Enabling the XMP or EXPO profile in the BIOS usually fixes this.",
+              "status": "caution"
+            }
+          ]
+        },
+        {
+          "key": "expansion-slots",
+          "label": "Expansion slots",
+          "children": [
+            {
+              "key": "slots",
+              "label": "Slots",
+              "value": "3 total, 2 in use, 1 free"
+            },
+            {
+              "key": "free-j3708-pcie-x4-slot-from-promontory",
+              "label": "Free: J3708 PCIE x4 slot from Promontory",
+              "value": "PCIe, x4 lanes",
+              "status": "good"
+            },
+            {
+              "key": "m-2-sockets",
+              "label": "M.2 sockets",
+              "value": "Windows cannot see empty M.2 sockets on this board; check the board manual.",
+              "status": "note"
+            }
+          ]
+        },
+        {
+          "key": "storage",
+          "label": "Storage",
+          "children": [
+            {
+              "key": "drives",
+              "label": "Drives",
+              "value": "1 × SATA HDD, 1 × SATA SSD, 1 × NVMe SSD"
+            },
+            {
+              "key": "replace-first",
+              "label": "Replace first",
+              "value": "A drive shows warning signs; see Storage. Back up before upgrading anything else.",
+              "status": "caution"
+            },
+            {
+              "key": "free-ports",
+              "label": "Free ports",
+              "value": "Windows does not report empty SATA ports or M.2 sockets; check the board manual.",
+              "status": "note"
+            }
+          ]
+        },
+        {
+          "key": "board-manual",
+          "label": "Board manual",
+          "value": "Search for “Gigabyte Technology Co., Ltd. B550 EAGLE WIFI6 manual” for exact slot, lane-sharing and memory support rules.",
+          "status": "note"
+        }
+      ]
+    },
+    {
+      "id": "problems",
+      "title": "Device Problems",
+      "items": [
+        {
+          "key": "devices-with-problems",
+          "label": "Devices with problems",
+          "value": "1",
+          "status": "caution"
+        },
+        {
+          "key": "base-system-device",
+          "label": "Base System Device",
+          "value": "Code 28: Drivers are not installed",
+          "status": "caution",
+          "children": [
+            {
+              "key": "device-id",
+              "label": "Device ID",
+              "value": "PCI\\VEN_1022&DEV_1234\\3&1"
+            }
+          ]
+        },
+        {
+          "key": "not-connected",
+          "label": "Not connected",
+          "value": "1",
+          "children": [
+            {
+              "key": "xbox-wireless-adapter",
+              "label": "Xbox Wireless Adapter",
+              "value": "Code 45: Not currently connected",
+              "status": "note",
+              "children": [
+                {
+                  "key": "class",
+                  "label": "Class",
+                  "value": "Net"
+                },
+                {
+                  "key": "device-id",
+                  "label": "Device ID",
+                  "value": "USB\\VID_045E&PID_02FE\\1"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drivers",
+      "title": "Drivers & Firmware Age",
+      "items": [
+        {
+          "key": "bios",
+          "label": "BIOS",
+          "value": "2024-11-18 (1 year old)"
+        },
+        {
+          "key": "drivers-older-than-3-years",
+          "label": "Drivers older than 3 years",
+          "value": "2",
+          "status": "caution",
+          "children": [
+            {
+              "key": "realtek-pcie-gbe-family-controller",
+              "label": "Realtek PCIe GbE Family Controller",
+              "value": "10.38.1009.2019, 2019-10-09 (7 years old), Realtek",
+              "status": "caution"
+            },
+            {
+              "key": "realtek-high-definition-audio",
+              "label": "Realtek High Definition Audio",
+              "value": "6.0.9235.1, 2021-08-24 (5 years old), Realtek Semiconductor Corp.",
+              "status": "caution"
+            }
+          ]
+        },
+        {
+          "key": "third-party-drivers",
+          "label": "Third-party drivers",
+          "value": "3",
+          "children": [
+            {
+              "key": "display",
+              "label": "display",
+              "children": [
+                {
+                  "key": "nvidia-geforce-gtx-1070-ti",
+                  "label": "NVIDIA GeForce GTX 1070 Ti",
+                  "value": "32.0.15.8278, 2025-09-30 (1 year old), NVIDIA"
+                }
+              ]
+            },
+            {
+              "key": "media",
+              "label": "media",
+              "children": [
+                {
+                  "key": "realtek-high-definition-audio",
+                  "label": "Realtek High Definition Audio",
+                  "value": "6.0.9235.1, 2021-08-24 (5 years old), Realtek Semiconductor Corp.",
+                  "status": "caution"
+                }
+              ]
+            },
+            {
+              "key": "net",
+              "label": "net",
+              "children": [
+                {
+                  "key": "realtek-pcie-gbe-family-controller",
+                  "label": "Realtek PCIe GbE Family Controller",
+                  "value": "10.38.1009.2019, 2019-10-09 (7 years old), Realtek",
+                  "status": "caution"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "updates",
+          "label": "Updates",
+          "value": "OpenPCManifest never downloads drivers. Use Windows Update or the device maker's site.",
+          "status": "note"
+        }
+      ]
+    },
+    {
+      "id": "windows11",
+      "title": "Windows 11 Readiness",
+      "items": [
+        {
+          "key": "result",
+          "label": "Result",
+          "value": "Already running Windows 11",
+          "status": "good"
+        },
+        {
+          "key": "tpm",
+          "label": "TPM",
+          "value": "TPM 2.0 (AMD)",
+          "status": "good"
+        },
+        {
+          "key": "firmware",
+          "label": "Firmware",
+          "value": "UEFI",
+          "status": "good"
+        },
+        {
+          "key": "secure-boot",
+          "label": "Secure Boot",
+          "value": "On",
+          "status": "good"
+        },
+        {
+          "key": "processor",
+          "label": "Processor",
+          "value": "Likely supported (estimate)",
+          "status": "good"
+        },
+        {
+          "key": "memory",
+          "label": "Memory",
+          "value": "47.9 GB (4 GB required)",
+          "status": "good"
+        },
+        {
+          "key": "system-drive",
+          "label": "System drive",
+          "value": "405 GB (64 GB required)",
+          "status": "good"
+        },
+        {
+          "key": "secure-boot-2023-certificates",
+          "label": "Secure Boot 2023 certificates",
+          "value": "Updated",
+          "status": "good"
+        }
+      ]
+    },
+    {
+      "id": "collection",
+      "title": "About This Report",
+      "items": [
+        {
+          "key": "collected",
+          "label": "Collected",
+          "value": "2026-11-15T19:04:44.0000000Z"
+        },
+        {
+          "key": "generator",
+          "label": "Generator",
+          "value": "OpenPCManifest 0.1.0 (fixture)"
+        },
+        {
+          "key": "windows-powershell",
+          "label": "Windows PowerShell",
+          "value": "5.1.26100.7019"
+        },
+        {
+          "key": "administrator",
+          "label": "Administrator",
+          "value": "Yes"
+        },
+        {
+          "key": "smbios-version",
+          "label": "SMBIOS version",
+          "value": "3.3"
+        }
+      ]
+    }
+  ]
+}

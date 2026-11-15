@@ -1,0 +1,82 @@
+name: Nightly
+
+# Builds the Windows exe on every push to main (and once a day) and replaces
+# the rolling "nightly" pre-release. Each nightly is labelled with the crate
+# version plus a build stamp, for example:
+#   0.1.0-nightly.20261115.42+1a2b3c4
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  nightly:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show active-toolchain || rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Compute the build stamp
+        id: stamp
+        shell: pwsh
+        run: |
+          $version = (cargo metadata --no-deps --format-version 1 | ConvertFrom-Json).packages[0].version
+          $date = (Get-Date).ToUniversalTime().ToString('yyyyMMdd')
+          $sha = '${{ github.sha }}'.Substring(0, 7)
+          $build = "$version-nightly.$date.${{ github.run_number }}+$sha"
+          "build=$build" >> $env:GITHUB_OUTPUT
+          Write-Host "Build: $build"
+
+      - name: Build
+        env:
+          OPM_BUILD: ${{ steps.stamp.outputs.build }}
+        run: cargo build --release
+
+      - name: Package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Copy-Item target/release/openpcmanifest.exe dist/
+          Copy-Item LICENSE, README.md dist/
+          Compress-Archive -Path dist/* -DestinationPath openpcmanifest-nightly-windows-x64.zip -Force
+          Copy-Item target/release/openpcmanifest.exe openpcmanifest-nightly-windows-x64.exe
+          $files = 'openpcmanifest-nightly-windows-x64.zip', 'openpcmanifest-nightly-windows-x64.exe'
+          $files | ForEach-Object {
+            "$((Get-FileHash $_ -Algorithm SHA256).Hash.ToLower())  $_"
+          } | Set-Content -Encoding ascii SHA256SUMS.txt
+
+      - name: Replace the nightly pre-release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD: ${{ steps.stamp.outputs.build }}
+        run: |
+          gh release delete nightly --cleanup-tag --yes 2>$null
+          $notes = @"
+          Automated build of ``main`` at ${{ github.sha }}.
+
+          **Build:** $env:BUILD
+
+          Nightly builds are untested and unsigned. Windows SmartScreen may warn on first run;
+          choose *More info* then *Run anyway*. For a stable version, use the latest tagged release.
+          "@
+          gh release create nightly `
+            --prerelease `
+            --target ${{ github.sha }} `
+            --title "Nightly $env:BUILD" `
+            --notes $notes `
+            openpcmanifest-nightly-windows-x64.zip openpcmanifest-nightly-windows-x64.exe SHA256SUMS.txt
