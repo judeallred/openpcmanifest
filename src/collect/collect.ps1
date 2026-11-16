@@ -254,7 +254,9 @@ Q 'cdrom' {
 # ---- Audio, peripherals, USB, devices ---------------------------------------
 Q 'soundDevices' { Get-CimInstance Win32_SoundDevice | Select-Object Name, Manufacturer, Status }
 Q 'audioEndpoints' {
-    Get-PnpDevice -Class AudioEndpoint -PresentOnly | Select-Object FriendlyName, Status
+    # No endpoints is not an error (servers and VMs often have none).
+    Get-PnpDevice -Class AudioEndpoint -PresentOnly -ErrorAction SilentlyContinue |
+        Select-Object FriendlyName, Status
 }
 Q 'keyboards' { Get-CimInstance Win32_Keyboard | Select-Object Name, Description, PNPDeviceID }
 Q 'pointingDevices' {

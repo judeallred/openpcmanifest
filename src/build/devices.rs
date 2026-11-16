@@ -212,7 +212,13 @@ fn monitor_node(ctx: &Ctx<'_>, m: &Value) -> Option<Node> {
         join(
             &[
                 vendor.map(ToOwned::to_owned),
-                code.map(|c| format!("({c})")),
+                code.map(|c| {
+                    if vendor.is_some() {
+                        format!("({c})")
+                    } else {
+                        c
+                    }
+                }),
             ],
             " ",
         ),

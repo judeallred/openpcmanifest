@@ -386,3 +386,27 @@ fn virtual_machine_placeholders_are_hidden() {
         "1024 \u{d7} 768"
     );
 }
+
+#[test]
+fn server_and_unknown_maximum_memory() {
+    let snap = Snapshot::from_json(
+        r#"{"schema":1,
+            "os":[{"Caption":"Microsoft Windows Server 2025 Datacenter","ProductType":3}],
+            "physicalMemory":[{"DeviceLocator":"M0001","Capacity":8589934592}],
+            "memoryArray":[{"MemoryDevices":1,"MaxCapacity":0,"MaxCapacityEx":0}]}"#,
+    )
+    .unwrap();
+    let r = build(&snap);
+    assert_eq!(
+        value(&r, "windows11", &["Result"]),
+        "Not applicable to Windows Server"
+    );
+    assert!(
+        r.section("ram")
+            .unwrap()
+            .nodes
+            .iter()
+            .all(|n| n.label != "Maximum supported")
+    );
+    assert!(value(&r, "upgrade", &["Memory", "You can"]).contains("doesn't report its maximum"));
+}

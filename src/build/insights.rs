@@ -91,8 +91,14 @@ fn memory_advice(ctx: &Ctx<'_>) -> Option<Node> {
                 ),
             )
             .status(Status::Note)
-        } else {
+        } else if f.max_bytes.is_some() {
             Node::item("You can", "Memory is at the board's maximum.").status(Status::Note)
+        } else {
+            Node::item(
+                "You can",
+                "All slots are full, and this PC doesn't report its maximum memory. Check the board manual.",
+            )
+            .status(Status::Note)
         };
         g.push(advice);
     }
@@ -495,6 +501,11 @@ fn readiness_checks(ctx: &Ctx<'_>, os: &crate::json::Value) -> Vec<Node> {
 pub fn windows11(ctx: &Ctx<'_>) -> Section {
     let mut s = Section::new("windows11", "Windows 11 Readiness");
     let Some(os) = ctx.first("os") else { return s };
+    // ProductType 1 is a workstation; 2 and 3 are server editions.
+    if num(os, "ProductType").is_some_and(|t| t != 1) {
+        s.push(Node::item("Result", "Not applicable to Windows Server").status(Status::Note));
+        return s;
+    }
     let running = text(os, "Caption").is_some_and(|c| c.contains("Windows 11"));
     let checks = readiness_checks(ctx, os);
 

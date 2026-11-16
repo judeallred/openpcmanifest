@@ -473,13 +473,18 @@ pub fn memory_facts(ctx: &Ctx<'_>) -> MemoryFacts {
         .collect();
     channels.sort_unstable();
     channels.dedup();
-    let max_bytes = ctx.smbios.max_memory_bytes().or_else(|| {
-        let a = ctx.first("memoryArray")?;
-        let kib = num(a, "MaxCapacityEx")
-            .filter(|&v| v > 0)
-            .or_else(|| num(a, "MaxCapacity"))?;
-        Some(kib * 1024)
-    });
+    let max_bytes = ctx
+        .smbios
+        .max_memory_bytes()
+        .or_else(|| {
+            let a = ctx.first("memoryArray")?;
+            let kib = num(a, "MaxCapacityEx")
+                .filter(|&v| v > 0)
+                .or_else(|| num(a, "MaxCapacity"))?;
+            Some(kib * 1024)
+        })
+        // Virtual machines often report 0 or less than what is installed.
+        .filter(|&max| max > 0 && max >= installed);
     MemoryFacts {
         installed,
         total_slots,
