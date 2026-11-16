@@ -445,7 +445,11 @@ pub fn memory_facts(ctx: &Ctx<'_>) -> MemoryFacts {
             m.smbios
                 .as_ref()
                 .and_then(|d| d.speed_mts.map(u64::from))
-                .or_else(|| m.win32.as_ref().and_then(|w| num(w, "Speed")))
+                .or_else(|| {
+                    m.win32
+                        .as_ref()
+                        .and_then(|w| num(w, "Speed").filter(|&v| v > 0))
+                })
         })
         .min();
     let configured_mts = mods
@@ -457,7 +461,7 @@ pub fn memory_facts(ctx: &Ctx<'_>) -> MemoryFacts {
                 .or_else(|| {
                     m.win32
                         .as_ref()
-                        .and_then(|w| num(w, "ConfiguredClockSpeed"))
+                        .and_then(|w| num(w, "ConfiguredClockSpeed").filter(|&v| v > 0))
                 })
         })
         .min();
@@ -641,13 +645,13 @@ fn module_node(m: &Module) -> Node {
     n.push(opt(
         "Rated speed",
         d.and_then(|d| d.speed_mts.map(u64::from))
-            .or_else(|| w.and_then(|w| num(w, "Speed")))
+            .or_else(|| w.and_then(|w| num(w, "Speed").filter(|&v| v > 0)))
             .map(|v| format!("{v} MT/s")),
     ));
     n.push(opt(
         "Configured speed",
         d.and_then(|d| d.configured_speed_mts.map(u64::from))
-            .or_else(|| w.and_then(|w| num(w, "ConfiguredClockSpeed")))
+            .or_else(|| w.and_then(|w| num(w, "ConfiguredClockSpeed").filter(|&v| v > 0)))
             .map(|v| format!("{v} MT/s")),
     ));
     n.push(opt(

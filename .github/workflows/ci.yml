@@ -37,11 +37,12 @@ jobs:
       - name: Smoke test against this runner's real hardware
         shell: pwsh
         run: |
+          # Everything printed or kept here is redacted: CI logs are public.
           cargo run --release -- --json --redact --out smoke-report.json
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          cargo run --release -- --text --save-raw smoke-raw.json --out smoke-report.txt
+          cargo run --release -- --text --redact --out smoke-report.txt
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          Get-Content smoke-report.txt -TotalCount 40
+          Get-Content smoke-report.txt
       - name: Keep the smoke-test output for inspection
         uses: actions/upload-artifact@v4
         with:

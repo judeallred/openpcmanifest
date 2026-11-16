@@ -112,8 +112,9 @@ fn video_memory(ctx: &Ctx<'_>, adapter: &Value) -> Option<u64> {
 fn display_mode(adapter: &Value) -> Option<String> {
     let w = num(adapter, "CurrentHorizontalResolution")?;
     let h = num(adapter, "CurrentVerticalResolution")?;
-    let refresh =
-        num(adapter, "CurrentRefreshRate").map_or_else(String::new, |r| format!(" @ {r} Hz"));
+    let refresh = num(adapter, "CurrentRefreshRate")
+        .filter(|&r| r > 1)
+        .map_or_else(String::new, |r| format!(" @ {r} Hz"));
     let depth =
         num(adapter, "CurrentBitsPerPixel").map_or_else(String::new, |b| format!(", {b}-bit"));
     Some(format!("{w} \u{d7} {h}{refresh}{depth}"))

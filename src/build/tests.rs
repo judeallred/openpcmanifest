@@ -369,3 +369,20 @@ fn golden_desktop_json() {
 fn golden_laptop_text() {
     golden("laptop", Format::Text, "txt");
 }
+
+#[test]
+fn virtual_machine_placeholders_are_hidden() {
+    let snap = Snapshot::from_json(
+        r#"{"schema":1,
+            "physicalMemory":[{"DeviceLocator":"M0001","Capacity":8589934592,"Speed":0,"ConfiguredClockSpeed":0}],
+            "videoControllers":[{"Name":"Microsoft Hyper-V Video","CurrentHorizontalResolution":1024,
+                                 "CurrentVerticalResolution":768,"CurrentRefreshRate":1}]}"#,
+    )
+    .unwrap();
+    let r = build(&snap);
+    assert_eq!(value(&r, "summary", &["RAM"]), "8 GB");
+    assert_eq!(
+        value(&r, "graphics", &["Microsoft Hyper-V Video", "Current mode"]),
+        "1024 \u{d7} 768"
+    );
+}
