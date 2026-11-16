@@ -21,7 +21,7 @@ gui = ["dep:eframe", "dep:rfd"]
 
 [dependencies]
 eframe = { version = "0.31", optional = true }
-rfd = { version = "0.15", optional = true }
+rfd = { version = "0.18", optional = true }
 
 [profile.release]
 lto = true
