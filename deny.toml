@@ -2,10 +2,16 @@
 
 [graph]
 all-features = true
+# The only binary we ship is the Windows x64 exe. Linux builds use
+# --no-default-features and have no dependencies at all.
+targets = ["x86_64-pc-windows-msvc"]
 
 [advisories]
 version = 2
 yanked = "deny"
+# Fail on unmaintained notices for our own direct dependencies only; ones deep
+# inside eframe's tree are tracked through Dependabot upgrades instead.
+unmaintained = "workspace"
 
 [licenses]
 version = 2

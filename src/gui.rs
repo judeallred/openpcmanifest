@@ -490,7 +490,7 @@ fn nodes_view(ui: &mut egui::Ui, nodes: &[Node], path: &str, depth: usize, open_
             .id_salt(&child_path)
             .default_open(open_all || depth < 1)
             .show(ui, |ui| {
-                nodes_view(ui, &n.children, &child_path, depth + 1, open_all)
+                nodes_view(ui, &n.children, &child_path, depth + 1, open_all);
             });
     }
 }
