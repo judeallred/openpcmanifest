@@ -21,7 +21,7 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: rustup show active-toolchain || rustup toolchain install
 
       - name: Check the tag matches Cargo.toml
@@ -78,7 +78,7 @@ jobs:
     if: vars.PUBLISH_PACKAGES == 'true'
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: rustup show active-toolchain || rustup toolchain install
       - run: cargo publish
         env:
@@ -102,7 +102,7 @@ jobs:
     if: vars.PUBLISH_PACKAGES == 'true'
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/download-artifact@v4
         with:
           name: release-files
