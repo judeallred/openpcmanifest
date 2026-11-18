@@ -223,6 +223,28 @@ fn collection(ctx: &Ctx<'_>) -> Section {
         "SMBIOS version",
         ctx.raw.path(&["smbios", "version"]).as_str(),
     ));
+    if let Value::Object(timings) = ctx.raw.get("timings")
+        && !timings.is_empty()
+    {
+        let slowest = timings
+            .iter()
+            .filter_map(|(_, v)| v.as_u64())
+            .max()
+            .unwrap_or(0);
+        let mut g = Node::item(
+            "Collection time",
+            format!("{:.1} s", millis_to_secs(slowest)),
+        )
+        .volatile();
+        for (group, ms) in timings {
+            if let Some(ms) = ms.as_u64() {
+                g.push(
+                    Node::item(group.clone(), format!("{:.1} s", millis_to_secs(ms))).volatile(),
+                );
+            }
+        }
+        s.push(g);
+    }
     let errors = ctx.list("errors");
     if !errors.is_empty() {
         let mut g = Node::item("Queries that failed", errors.len().to_string());
@@ -236,6 +258,11 @@ fn collection(ctx: &Ctx<'_>) -> Section {
         s.push(g);
     }
     s
+}
+
+#[allow(clippy::cast_precision_loss, reason = "display rounding only")]
+fn millis_to_secs(ms: u64) -> f64 {
+    ms as f64 / 1000.0
 }
 
 #[cfg(test)]

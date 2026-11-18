@@ -127,6 +127,11 @@ pub fn merge(into: &mut Value, part: Value) {
             Some((_, Value::Array(list))) if key == "errors" || key == "groups" => {
                 list.extend(value.items().into_iter().cloned());
             }
+            Some((_, Value::Object(map))) if key == "timings" => {
+                if let Value::Object(more) = value {
+                    map.extend(more);
+                }
+            }
             Some(_) if HEADER_KEYS.contains(&key.as_str()) => {}
             Some((_, slot)) => *slot = value,
             None => target.push((key, value)),
@@ -149,6 +154,7 @@ fn base_snapshot() -> Snapshot {
             ),
             ("groups".to_owned(), Value::Array(Vec::new())),
             ("errors".to_owned(), Value::Array(Vec::new())),
+            ("timings".to_owned(), Value::Object(Vec::new())),
         ]),
     }
 }
@@ -184,7 +190,14 @@ pub fn collect_with_progress(
     let mut done: Vec<&'static str> = Vec::new();
     let mut first_error = None;
     on_progress(&snap, &done);
-    run_groups(&mut |group, result| {
+    run_groups(&mut |group, result, millis| {
+        merge(
+            &mut snap.data,
+            Value::Object(vec![(
+                "timings".to_owned(),
+                Value::Object(vec![(group.to_owned(), Value::Number(f64::from(millis)))]),
+            )]),
+        );
         match result {
             Ok(part) => merge(&mut snap.data, part),
             Err(e) => {
@@ -270,11 +283,11 @@ fn run_group(script: &Path, dir: &Path, group: &str) -> Result<Value, CollectErr
     Ok(json::parse(&text)?)
 }
 
-/// Runs every group in parallel and hands each result to `on_result` as it
-/// finishes.
+/// Runs every group in parallel and hands each result, with how long it
+/// took in milliseconds, to `on_result` as it finishes.
 #[cfg(windows)]
 fn run_groups(
-    on_result: &mut dyn FnMut(&'static str, Result<Value, CollectError>),
+    on_result: &mut dyn FnMut(&'static str, Result<Value, CollectError>, u32),
 ) -> Result<(), CollectError> {
     let dir = std::env::temp_dir().join(format!("openpcmanifest-{}", std::process::id()));
     std::fs::create_dir_all(&dir)?;
@@ -288,13 +301,16 @@ fn run_groups(
             let tx = tx.clone();
             let (script, dir) = (&script, &dir);
             scope.spawn(move || {
+                let started = std::time::Instant::now();
+                let result = run_group(script, dir, group);
+                let millis = u32::try_from(started.elapsed().as_millis()).unwrap_or(u32::MAX);
                 // The receiver outlives every sender inside this scope.
-                let _ = tx.send((group, run_group(script, dir, group)));
+                let _ = tx.send((group, result, millis));
             });
         }
         drop(tx);
-        for (group, result) in rx {
-            on_result(group, result);
+        for (group, result, millis) in rx {
+            on_result(group, result, millis);
         }
     });
     // Best effort: a leftover temp folder is harmless.
@@ -308,7 +324,7 @@ fn run_groups(
     reason = "same signature as the Windows implementation"
 )]
 fn run_groups(
-    on_result: &mut dyn FnMut(&'static str, Result<Value, CollectError>),
+    on_result: &mut dyn FnMut(&'static str, Result<Value, CollectError>, u32),
 ) -> Result<(), CollectError> {
     let message = "Full collection needs Windows. Only processor details were read; \
                    use --from-raw to view a snapshot taken on Windows.";
@@ -316,7 +332,7 @@ fn run_groups(
         "errors".to_owned(),
         Value::Array(vec![error_entry("platform", message)]),
     )]);
-    on_result("platform", Ok(part));
+    on_result("platform", Ok(part), 0);
     Ok(())
 }
 

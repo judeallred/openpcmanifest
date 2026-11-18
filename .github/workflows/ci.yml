@@ -49,11 +49,13 @@ jobs:
         shell: pwsh
         run: |
           # Everything printed or kept here is redacted: CI logs are public.
+          cargo build --release --target ${{ matrix.target }}
+          $exe = "target/${{ matrix.target }}/release/openpcmanifest.exe"
           $sw = [Diagnostics.Stopwatch]::StartNew()
-          cargo run --release --target ${{ matrix.target }} -- --text --redact --out smoke-report.txt
+          & $exe --text --redact --out smoke-report.txt
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          Write-Host "Collection and report took $($sw.Elapsed.TotalSeconds) s (including cargo startup)"
-          cargo run --release --target ${{ matrix.target }} -- --json --redact --out smoke-report.json
+          Write-Host "Collection took $([math]::Round($sw.Elapsed.TotalSeconds, 1)) s"
+          & $exe --json --redact --out smoke-report.json
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Get-Content smoke-report.txt
       - name: Keep the smoke-test output for inspection
