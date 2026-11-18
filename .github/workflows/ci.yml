@@ -51,12 +51,15 @@ jobs:
           # Everything printed or kept here is redacted: CI logs are public.
           cargo build --release --target ${{ matrix.target }}
           $exe = "target/${{ matrix.target }}/release/openpcmanifest.exe"
+          # Release builds use the GUI subsystem, so wait for the process explicitly.
+          function Run([string[]]$opts) {
+            $p = Start-Process -FilePath $exe -ArgumentList $opts -NoNewWindow -Wait -PassThru
+            if ($p.ExitCode -ne 0) { Write-Error "openpcmanifest exited with $($p.ExitCode)"; exit $p.ExitCode }
+          }
           $sw = [Diagnostics.Stopwatch]::StartNew()
-          & $exe --text --redact --out smoke-report.txt
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Run '--text', '--redact', '--out', 'smoke-report.txt'
           Write-Host "Collection took $([math]::Round($sw.Elapsed.TotalSeconds, 1)) s"
-          & $exe --json --redact --out smoke-report.json
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Run '--json', '--redact', '--out', 'smoke-report.json'
           Get-Content smoke-report.txt
       - name: Keep the smoke-test output for inspection
         uses: actions/upload-artifact@v7
