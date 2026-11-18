@@ -1,5 +1,3 @@
-# FAQ
-
 **Is it really free? What's the catch?**
 No catch. It's MIT-licensed open source: no ads, no account, no telemetry, no bundled software, and no paid tier.
 

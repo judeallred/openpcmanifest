@@ -1,5 +1,3 @@
-# Reading Your Report
-
 Sections are listed on the left. Use the search box at the top to find anything across all of them, such as a model number, "PCIe" or "Realtek".
 
 Coloured values mean something: **green** is good, **amber** needs attention, **red** is a problem, and *grey italics* are notes or advice.

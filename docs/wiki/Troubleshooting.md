@@ -1,5 +1,3 @@
-# Troubleshooting
-
 ## It takes a few seconds to load
 
 Reading hardware goes through Windows' own inventory services, and some queries (installed drivers especially) take a few seconds on any machine. OpenPCManifest runs them in parallel and shows each section as soon as its data arrives, so the Summary, CPU and RAM appear first. The line at the top lists what's still loading.

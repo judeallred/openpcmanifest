@@ -1,5 +1,3 @@
-# Snapshots and Compare
-
 A **snapshot** is the raw data OpenPCManifest read from your PC, saved as a file. Comparing two snapshots shows exactly what changed: a new drive, a BIOS update, a different GPU driver, a RAM swap.
 
 ## In the app

@@ -1,5 +1,3 @@
-# Drive Health
-
 Each drive in **Storage** gets a verdict with the reason in plain words.
 
 | Verdict | Means | Do this |

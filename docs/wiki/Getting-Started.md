@@ -1,5 +1,3 @@
-# Getting Started
-
 ## Download
 
 1. Open the [latest release](https://github.com/judeallred/openpcmanifest/releases/latest), or the [nightly build](https://github.com/judeallred/openpcmanifest/releases/tag/nightly) for the newest changes.

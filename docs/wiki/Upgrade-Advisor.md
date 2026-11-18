@@ -1,5 +1,3 @@
-# Upgrade Advisor
-
 The **Upgrade Advisor** section answers "what can I add to this PC?" from what the hardware reports.
 
 ## Memory

@@ -1,5 +1,3 @@
-# Sharing Your Specs
-
 ## Copy a short summary
 
 Click **Copy summary** and choose:

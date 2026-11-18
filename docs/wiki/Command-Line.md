@@ -1,5 +1,3 @@
-# Command Line
-
 Run `openpcmanifest` with any option to get the command-line mode instead of the window. Open PowerShell or Command Prompt in the folder with the exe (or anywhere, if it's on your PATH).
 
 ## Examples
