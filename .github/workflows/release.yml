@@ -1,9 +1,10 @@
 name: Release
 
-# Runs when a version tag such as v0.1.0 is pushed. Builds, packages and
-# publishes the GitHub release. Package-manager publishing (crates.io, winget,
-# Chocolatey) is switched off until v1.0: set the repository variable
-# PUBLISH_PACKAGES to "true" to turn it on. See docs/RELEASING.md.
+# Runs when a version tag such as v0.1.0 is pushed. Builds 64-bit and 32-bit
+# Windows exes, packages them and publishes the GitHub release.
+# Package-manager publishing (crates.io, winget, Chocolatey) is switched off
+# until v1.0: set the repository variable PUBLISH_PACKAGES to "true" to turn
+# it on. See docs/RELEASING.md.
 
 on:
   push:
@@ -16,65 +17,82 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-    runs-on: windows-latest
+  version:
+    runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v7
-      - run: rustup show active-toolchain || rustup toolchain install
-
       - name: Check the tag matches Cargo.toml
         id: version
-        shell: pwsh
         run: |
-          $version = (cargo metadata --no-deps --format-version 1 | ConvertFrom-Json).packages[0].version
-          if ("v$version" -ne '${{ github.ref_name }}') {
-            Write-Error "Tag ${{ github.ref_name }} does not match Cargo.toml version $version"
+          version=$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2)
+          if [ "v$version" != "${{ github.ref_name }}" ]; then
+            echo "::error::Tag ${{ github.ref_name }} does not match Cargo.toml version $version"
             exit 1
-          }
-          "version=$version" >> $env:GITHUB_OUTPUT
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
+  build:
+    needs: version
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - arch: x64
+            target: x86_64-pc-windows-msvc
+          - arch: x86
+            target: i686-pc-windows-msvc
+    steps:
+      - uses: actions/checkout@v7
+      - run: rustup show active-toolchain || rustup toolchain install
+      - run: rustup target add ${{ matrix.target }}
       - name: Test
-        run: cargo test --all-features
-
+        run: cargo test --target ${{ matrix.target }} --all-features
       - name: Build
-        run: cargo build --release
-
+        run: cargo build --release --target ${{ matrix.target }}
       - name: Package
         shell: pwsh
         run: |
-          $v = '${{ steps.version.outputs.version }}'
+          $name = 'openpcmanifest-${{ needs.version.outputs.version }}-windows-${{ matrix.arch }}'
           New-Item -ItemType Directory -Force dist | Out-Null
-          Copy-Item target/release/openpcmanifest.exe dist/
+          Copy-Item target/${{ matrix.target }}/release/openpcmanifest.exe dist/
           Copy-Item LICENSE, README.md, CHANGELOG.md dist/
-          Compress-Archive -Path dist/* -DestinationPath "openpcmanifest-$v-windows-x64.zip" -Force
-          Copy-Item target/release/openpcmanifest.exe "openpcmanifest-$v-windows-x64.exe"
-          Get-ChildItem "openpcmanifest-$v-*" | ForEach-Object {
-            "$((Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower())  $($_.Name)"
-          } | Set-Content -Encoding ascii SHA256SUMS.txt
+          Compress-Archive -Path dist/* -DestinationPath "$name.zip" -Force
+          Copy-Item target/${{ matrix.target }}/release/openpcmanifest.exe "$name.exe"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-${{ matrix.arch }}
+          path: openpcmanifest-*-windows-*
 
+  release:
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: release-*
+          merge-multiple: true
+      - name: Checksums
+        run: sha256sum openpcmanifest-*-windows-* > SHA256SUMS.txt && cat SHA256SUMS.txt
       - uses: actions/upload-artifact@v7
         with:
           name: release-files
           path: |
-            openpcmanifest-*-windows-x64.zip
-            openpcmanifest-*-windows-x64.exe
+            openpcmanifest-*-windows-*
             SHA256SUMS.txt
-
       - name: Create the GitHub release
-        shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
-          $v = '${{ steps.version.outputs.version }}'
-          gh release create '${{ github.ref_name }}' `
-            --title "OpenPCManifest $v" `
-            --generate-notes `
-            "openpcmanifest-$v-windows-x64.zip" "openpcmanifest-$v-windows-x64.exe" SHA256SUMS.txt
+          gh release create '${{ github.ref_name }}' \
+            --title "OpenPCManifest ${{ needs.version.outputs.version }}" \
+            --generate-notes \
+            openpcmanifest-*-windows-* SHA256SUMS.txt
 
   crates-io:
-    needs: build
+    needs: release
     if: vars.PUBLISH_PACKAGES == 'true'
     runs-on: windows-latest
     steps:
@@ -85,25 +103,25 @@ jobs:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
   winget:
-    needs: build
+    needs: release
     if: vars.PUBLISH_PACKAGES == 'true'
     runs-on: windows-latest
     steps:
-      # Updates an existing winget package. The first version must be
-      # submitted by hand; see docs/RELEASING.md.
+      # Updates an existing winget package with both the x64 and x86 zips.
+      # The first version must be submitted by hand; see docs/RELEASING.md.
       - uses: vedantmgoyal9/winget-releaser@main
         with:
           identifier: JudeAllred.OpenPCManifest
-          installers-regex: '-windows-x64\.zip$'
+          installers-regex: '-windows-(x64|x86)\.zip$'
           token: ${{ secrets.WINGET_TOKEN }}
 
   chocolatey:
-    needs: build
+    needs: [version, release]
     if: vars.PUBLISH_PACKAGES == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: release-files
       - name: Pack and push
@@ -111,8 +129,9 @@ jobs:
         env:
           CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
         run: |
-          $v = '${{ needs.build.outputs.version }}'
+          $v = '${{ needs.version.outputs.version }}'
           $pkg = 'packaging/chocolatey'
+          # Chocolatey runs on 64-bit Windows in practice; ship the x64 build.
           Copy-Item "openpcmanifest-$v-windows-x64.exe" "$pkg/tools/openpcmanifest.exe"
           Copy-Item LICENSE "$pkg/legal/LICENSE.txt"
           $hash = (Get-FileHash "$pkg/tools/openpcmanifest.exe" -Algorithm SHA256).Hash

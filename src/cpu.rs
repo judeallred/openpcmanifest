@@ -10,11 +10,14 @@ use crate::json::Value;
 pub type Leaf = [u32; 6];
 
 /// Reads the CPUID leaves this tool decodes from the current processor.
-/// Returns an empty list on non-x86-64 targets.
+/// Returns an empty list on targets other than x86 and x86-64.
 #[must_use]
 pub fn read_local() -> Vec<Leaf> {
-    #[cfg(target_arch = "x86_64")]
+    #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
     {
+        #[cfg(target_arch = "x86")]
+        use std::arch::x86::__cpuid_count;
+        #[cfg(target_arch = "x86_64")]
         use std::arch::x86_64::__cpuid_count;
         let q = |leaf: u32, sub: u32| {
             let r = __cpuid_count(leaf, sub);
@@ -65,7 +68,7 @@ pub fn read_local() -> Vec<Leaf> {
         }
         out
     }
-    #[cfg(not(target_arch = "x86_64"))]
+    #[cfg(not(any(target_arch = "x86", target_arch = "x86_64")))]
     {
         Vec::new()
     }
@@ -452,7 +455,7 @@ mod tests {
     #[test]
     fn reads_local_cpu_without_panicking() {
         let leaves = read_local();
-        if cfg!(target_arch = "x86_64") {
+        if cfg!(any(target_arch = "x86", target_arch = "x86_64")) {
             let info = decode(&leaves).unwrap();
             assert!(!info.vendor.is_empty());
         }

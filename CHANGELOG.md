@@ -6,6 +6,18 @@ All notable changes are listed here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- 32-bit (x86) Windows builds alongside 64-bit, for older machines.
+- Collection time per query group under **About This Report**.
+- User guide pages for the GitHub wiki, kept in `docs/wiki/`.
+
+### Changed
+
+- Much faster startup: collection runs as seven parallel query groups, and the window shows each
+  section as soon as its data arrives instead of waiting for everything.
+- Updated to eframe/egui 0.37 and rfd 0.18.
+
 ## [0.1.0] - unreleased
 
 ### Added

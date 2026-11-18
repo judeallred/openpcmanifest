@@ -96,6 +96,9 @@ tweak tools, and never will.
 Download the `.exe` (or the `.zip`) and run it. Nothing is installed. Every release lists SHA-256
 checksums in `SHA256SUMS.txt`.
 
+Pick **`windows-x64`** for 64-bit Windows (almost every PC since 2010) or **`windows-x86`** for older
+32-bit machines.
+
 **SmartScreen warning?** Builds are not code-signed yet (signing is planned for v1.0). Windows may
 say it "protected your PC". Choose **More info → Run anyway**, or verify the checksum first:
 
@@ -127,12 +130,12 @@ cargo install --git https://github.com/judeallred/openpcmanifest
 
 | | Minimum | Notes |
 | --- | --- | --- |
-| **Windows** | Windows 10 version 1809, Windows 11 | x64 |
+| **Windows** | Windows 10 version 1809, Windows 11 | 64-bit (x64) and 32-bit (x86) builds |
 | **Windows Server** | 2019, 2022, 2025 | x64, with Desktop Experience for the GUI; the CLI should also work on Server Core |
 | **Windows PowerShell** | 5.1 | Built into every supported version; nothing to install |
 | **Administrator rights** | Optional | Without them, SMART attributes, drive reliability counters and TPM details are skipped and the report says so |
 
-ARM64 Windows, Linux and macOS collectors are not available yet. On other platforms the tool can
+Windows on ARM, Linux and macOS collectors are not available yet. On other platforms the tool can
 still open and compare snapshots taken on Windows.
 
 These are the versions OpenPCManifest is designed for. What has actually been tested is recorded
@@ -142,8 +145,9 @@ in the [testing grid](docs/TESTED_SYSTEMS.md).
 
 ### The window
 
-Double-click `openpcmanifest.exe`. Sections are on the left, details on the right, and everything
-is searchable from the box at the top.
+Double-click `openpcmanifest.exe`. The window opens immediately and fills in as your hardware is
+read, with Summary, CPU, RAM and Motherboard first; everything is in within a few seconds. Sections
+are on the left, details on the right, and everything is searchable from the box at the top.
 
 - **Copy summary** puts a short "my PC" block on the clipboard as Markdown, BBCode or text.
 - **File → Save report as** writes HTML, Markdown, BBCode, text or JSON.
@@ -200,8 +204,9 @@ The JSON format is versioned (`schemaVersion`) and documented in
 OpenPCManifest is written in Rust and built as a pipeline:
 
 1. **Collect.** One embedded, read-only PowerShell script ([`src/collect/collect.ps1`](src/collect/collect.ps1))
-   queries Windows' own inventory (CIM/WMI) and returns a single JSON snapshot. CPU details come
-   straight from the processor's `CPUID` instruction.
+   queries Windows' own inventory (CIM/WMI). Its queries are split into seven groups that run in
+   parallel, and each group's results appear as soon as they arrive. CPU details come straight from
+   the processor's `CPUID` instruction.
 2. **Parse.** Pure Rust decoders read the binary parts: SMBIOS firmware tables (memory slots,
    expansion slots, BIOS), SMART pages (drive health) and CPUID.
 3. **Build.** The snapshot becomes a report tree of sections and labelled values.

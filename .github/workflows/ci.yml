@@ -24,29 +24,47 @@ jobs:
       - run: cargo fmt --all --check
 
   windows:
-    name: Windows (clippy, tests, live smoke test)
+    name: Windows ${{ matrix.arch }} (clippy, tests, live smoke test)
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x64
+            target: x86_64-pc-windows-msvc
+          - arch: x86
+            target: i686-pc-windows-msvc
     steps:
       - uses: actions/checkout@v7
       - run: rustup show active-toolchain || rustup toolchain install
+      - run: rustup target add ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
       - name: Clippy (maximum strictness)
-        run: cargo clippy --all-targets --all-features -- -D warnings
+        run: cargo clippy --target ${{ matrix.target }} --all-targets --all-features -- -D warnings
       - name: Tests
-        run: cargo test --all-features
+        run: cargo test --target ${{ matrix.target }} --all-features
       - name: Smoke test against this runner's real hardware
         shell: pwsh
         run: |
           # Everything printed or kept here is redacted: CI logs are public.
-          cargo run --release -- --json --redact --out smoke-report.json
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          cargo run --release -- --text --redact --out smoke-report.txt
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo build --release --target ${{ matrix.target }}
+          $exe = "target/${{ matrix.target }}/release/openpcmanifest.exe"
+          # Release builds use the GUI subsystem, so wait for the process explicitly.
+          function Run([string[]]$opts) {
+            $p = Start-Process -FilePath $exe -ArgumentList $opts -NoNewWindow -Wait -PassThru
+            if ($p.ExitCode -ne 0) { Write-Error "openpcmanifest exited with $($p.ExitCode)"; exit $p.ExitCode }
+          }
+          $sw = [Diagnostics.Stopwatch]::StartNew()
+          Run '--text', '--redact', '--out', 'smoke-report.txt'
+          Write-Host "Collection took $([math]::Round($sw.Elapsed.TotalSeconds, 1)) s"
+          Run '--json', '--redact', '--out', 'smoke-report.json'
           Get-Content smoke-report.txt
       - name: Keep the smoke-test output for inspection
         uses: actions/upload-artifact@v7
         with:
-          name: smoke-test-windows
+          name: smoke-test-windows-${{ matrix.arch }}
           path: |
             smoke-report.json
             smoke-report.txt

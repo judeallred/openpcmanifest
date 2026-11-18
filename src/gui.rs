@@ -1,8 +1,8 @@
 //! The graphical interface, built with `eframe`/`egui`.
 //!
 //! Layout follows Speccy: sections on the left, the selected section's tree
-//! on the right. Collection runs on a background thread so the window opens
-//! immediately.
+//! on the right. Collection runs on a background thread and reports progress
+//! group by group, so sections appear as soon as their data arrives.
 
 use std::sync::mpsc::{self, Receiver, TryRecvError};
 use std::time::{Duration, Instant};
@@ -10,7 +10,7 @@ use std::time::{Duration, Instant};
 use eframe::egui::{self, Color32, RichText};
 
 use crate::build::build;
-use crate::collect::{Snapshot, collect};
+use crate::collect::{GROUPS, Snapshot, collect_with_progress};
 use crate::diff;
 use crate::model::{Node, Report, Section, Status};
 use crate::render::{Format, render, rig_summary};
@@ -31,27 +31,36 @@ pub fn run() -> Result<(), eframe::Error> {
     eframe::run_native(
         crate::NAME,
         options,
-        Box::new(|_cc| Ok(Box::new(App::new()))),
+        Box::new(|cc| Ok(Box::new(App::new(cc.egui_ctx.clone())))),
     )
+}
+
+/// A message from the collection thread.
+enum Msg {
+    /// The snapshot so far and the groups that have finished.
+    Progress(Snapshot, Vec<&'static str>),
+    /// Collection finished.
+    Done(Result<Snapshot, String>),
 }
 
 /// Where the data on screen came from.
 enum State {
-    /// Collection is running on a background thread.
-    Loading(Receiver<Result<Snapshot, String>>),
-    /// A report is ready.
+    /// Collection is running; the groups listed have finished.
+    Loading(Receiver<Msg>, Vec<&'static str>),
+    /// A complete report is ready.
     Ready,
     /// Collection failed.
     Failed(String),
 }
 
 struct App {
+    ctx: egui::Context,
     state: State,
     snapshot: Option<Snapshot>,
     report: Option<Report>,
     /// When set, the window shows a comparison instead of the report.
     comparison: Option<Report>,
-    selected: usize,
+    selected: &'static str,
     search: String,
     hide_private: bool,
     redact_exports: bool,
@@ -59,14 +68,30 @@ struct App {
     show_about: bool,
 }
 
+/// A friendly description of what each collection group covers.
+const fn group_label(group: &str) -> &'static str {
+    match group.as_bytes() {
+        b"core" => "system, CPU, RAM and motherboard",
+        b"graphics" => "graphics",
+        b"storage" => "drives",
+        b"network" => "network",
+        b"devices" => "devices",
+        b"security" => "security and updates",
+        b"drivers" => "drivers",
+        _ => "other details",
+    }
+}
+
 impl App {
-    fn new() -> Self {
+    fn new(ctx: egui::Context) -> Self {
+        let state = start_collection(&ctx);
         Self {
-            state: start_collection(),
+            ctx,
+            state,
             snapshot: None,
             report: None,
             comparison: None,
-            selected: 0,
+            selected: "summary",
             search: String::new(),
             hide_private: false,
             redact_exports: true,
@@ -75,11 +100,14 @@ impl App {
         }
     }
 
-    fn set_snapshot(&mut self, snap: Snapshot) {
+    fn show_snapshot(&mut self, snap: Snapshot) {
         self.report = Some(build(&snap));
         self.snapshot = Some(snap);
+    }
+
+    fn set_snapshot(&mut self, snap: Snapshot) {
+        self.show_snapshot(snap);
         self.comparison = None;
-        self.selected = 0;
         self.state = State::Ready;
     }
 
@@ -87,16 +115,24 @@ impl App {
         self.message = Some((text.into(), Instant::now()));
     }
 
-    fn poll(&mut self, ctx: &egui::Context) {
-        let State::Loading(rx) = &self.state else {
-            return;
-        };
-        match rx.try_recv() {
-            Ok(Ok(snap)) => self.set_snapshot(snap),
-            Ok(Err(e)) => self.state = State::Failed(e),
-            Err(TryRecvError::Empty) => ctx.request_repaint_after(Duration::from_millis(100)),
-            Err(TryRecvError::Disconnected) => {
-                self.state = State::Failed("The collector stopped unexpectedly.".to_owned());
+    fn poll(&mut self) {
+        loop {
+            let State::Loading(rx, _) = &self.state else {
+                return;
+            };
+            match rx.try_recv() {
+                Ok(Msg::Progress(snap, done)) => {
+                    self.show_snapshot(snap);
+                    if let State::Loading(_, finished) = &mut self.state {
+                        *finished = done;
+                    }
+                }
+                Ok(Msg::Done(Ok(snap))) => self.set_snapshot(snap),
+                Ok(Msg::Done(Err(e))) => self.state = State::Failed(e),
+                Err(TryRecvError::Empty) => return,
+                Err(TryRecvError::Disconnected) => {
+                    self.state = State::Failed("The collector stopped unexpectedly.".to_owned());
+                }
             }
         }
     }
@@ -163,6 +199,7 @@ impl App {
         match Snapshot::load(&path) {
             Ok(snap) => {
                 self.set_snapshot(snap);
+                self.selected = "summary";
                 self.notify(format!("Opened {}", path.display()));
             }
             Err(e) => self.notify(format!("Could not open: {e}")),
@@ -184,7 +221,7 @@ impl App {
                 let old = build(&old);
                 let changes = diff::compare(&old, &current, true);
                 self.comparison = Some(diff::to_report(&changes, &old, &current));
-                self.selected = 0;
+                self.selected = "changes";
                 self.notify(format!(
                     "{} changes since {}",
                     changes.len(),
@@ -195,33 +232,38 @@ impl App {
         }
     }
 
-    fn copy_summary(&mut self, ctx: &egui::Context, format: Format) {
+    fn copy_summary(&mut self, format: Format) {
         if let Some(report) = self.exportable() {
-            ctx.copy_text(rig_summary(&report, format));
+            self.ctx.copy_text(rig_summary(&report, format));
             self.notify(format!("Copied the summary as {}", format.name()));
         }
     }
 
-    fn menu_bar(&mut self, ctx: &egui::Context, ui: &mut egui::Ui) {
+    fn refresh(&mut self) {
+        self.state = start_collection(&self.ctx);
+        self.comparison = None;
+    }
+
+    fn menu_bar(&mut self, ui: &mut egui::Ui) {
         let ready = matches!(self.state, State::Ready);
-        egui::menu::bar(ui, |ui| {
+        egui::MenuBar::new().ui(ui, |ui| {
             ui.menu_button("File", |ui| {
                 if ui.button("Open snapshot\u{2026}").clicked() {
-                    ui.close_menu();
+                    ui.close();
                     self.open_snapshot();
                 }
                 if ui
                     .add_enabled(ready, egui::Button::new("Save snapshot\u{2026}"))
                     .clicked()
                 {
-                    ui.close_menu();
+                    ui.close();
                     self.save_snapshot();
                 }
-                ui.add_enabled_ui(ready, |ui| {
+                ui.add_enabled_ui(self.report.is_some(), |ui| {
                     ui.menu_button("Save report as", |ui| {
                         for f in Format::ALL {
                             if ui.button(f.name()).clicked() {
-                                ui.close_menu();
+                                ui.close();
                                 self.save_report(f);
                             }
                         }
@@ -231,12 +273,12 @@ impl App {
                     .add_enabled(ready, egui::Button::new("Compare with snapshot\u{2026}"))
                     .clicked()
                 {
-                    ui.close_menu();
+                    ui.close();
                     self.compare_with_snapshot();
                 }
                 ui.separator();
                 if ui.button("Quit").clicked() {
-                    ctx.send_viewport_cmd(egui::ViewportCommand::Close);
+                    ui.send_viewport_cmd(egui::ViewportCommand::Close);
                 }
             });
             ui.menu_button("View", |ui| {
@@ -248,44 +290,41 @@ impl App {
             });
             ui.menu_button("Help", |ui| {
                 if ui.button("User guide (wiki)").clicked() {
-                    ui.close_menu();
+                    ui.close();
                     open_url(crate::WIKI_URL);
                 }
                 if ui.button("Report a bug or request a feature").clicked() {
-                    ui.close_menu();
+                    ui.close();
                     open_url(crate::ISSUES_URL);
                 }
                 if ui.button("Project home").clicked() {
-                    ui.close_menu();
+                    ui.close();
                     open_url(crate::REPOSITORY);
                 }
                 ui.separator();
                 if ui.button("About").clicked() {
-                    ui.close_menu();
+                    ui.close();
                     self.show_about = true;
                 }
             });
         });
     }
 
-    fn toolbar(&mut self, ctx: &egui::Context, ui: &mut egui::Ui) {
-        let ready = matches!(self.state, State::Ready);
+    fn toolbar(&mut self, ui: &mut egui::Ui) {
+        let loading = matches!(self.state, State::Loading(..));
         ui.horizontal(|ui| {
             if ui
-                .add_enabled(
-                    !matches!(self.state, State::Loading(_)),
-                    egui::Button::new("\u{27f3} Refresh"),
-                )
+                .add_enabled(!loading, egui::Button::new("\u{27f3} Refresh"))
                 .clicked()
             {
-                self.state = start_collection();
+                self.refresh();
             }
-            ui.add_enabled_ui(ready, |ui| {
+            ui.add_enabled_ui(self.report.is_some(), |ui| {
                 ui.menu_button("Copy summary", |ui| {
                     for f in [Format::Markdown, Format::BbCode, Format::Text] {
                         if ui.button(f.name()).clicked() {
-                            ui.close_menu();
-                            self.copy_summary(ctx, f);
+                            ui.close();
+                            self.copy_summary(f);
                         }
                     }
                 });
@@ -323,13 +362,34 @@ impl App {
         });
     }
 
-    fn about_window(&mut self, ctx: &egui::Context) {
+    /// While loading, a line saying what is still on its way.
+    fn loading_banner(&self, ui: &mut egui::Ui) {
+        let State::Loading(_, done) = &self.state else {
+            return;
+        };
+        let pending: Vec<&str> = GROUPS
+            .iter()
+            .filter(|g| !done.contains(g))
+            .map(|g| group_label(g))
+            .collect();
+        ui.horizontal_wrapped(|ui| {
+            ui.spinner();
+            ui.label(if pending.is_empty() {
+                "Finishing up\u{2026}".to_owned()
+            } else {
+                format!("Still reading: {}", pending.join(", "))
+            });
+        });
+        ui.add_space(6.0);
+    }
+
+    fn about_window(&mut self) {
         let mut open = self.show_about;
         egui::Window::new("About")
             .open(&mut open)
             .collapsible(false)
             .resizable(false)
-            .show(ctx, |ui| {
+            .show(&self.ctx, |ui| {
                 ui.heading(crate::NAME);
                 ui.label(crate::build_string());
                 ui.label("A free, open-source hardware inventory for Windows. MIT licensed.");
@@ -340,85 +400,104 @@ impl App {
             });
         self.show_about = open;
     }
-}
 
-impl eframe::App for App {
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        self.poll(ctx);
-        egui::TopBottomPanel::top("menu").show(ctx, |ui| {
-            self.menu_bar(ctx, ui);
-            self.toolbar(ctx, ui);
-            ui.add_space(2.0);
-        });
-        egui::TopBottomPanel::bottom("status").show(ctx, |ui| self.status_bar(ui));
-        if self.show_about {
-            self.about_window(ctx);
+    fn sections_panel(&mut self, ui: &mut egui::Ui, report: Option<&Report>, searching: bool) {
+        let Some(r) = report else { return };
+        if self.comparison.is_some() && ui.button("\u{2190} Back to full report").clicked() {
+            self.comparison = None;
+            self.selected = "summary";
         }
-        let report = self.current();
-        let searching = !self.search.trim().is_empty();
-        egui::SidePanel::left("sections")
-            .resizable(false)
-            .exact_width(200.0)
-            .show(ctx, |ui| {
-                if let Some(r) = &report {
-                    if self.comparison.is_some()
-                        && ui.button("\u{2190} Back to full report").clicked()
-                    {
-                        self.comparison = None;
-                        self.selected = 0;
+        ui.add_space(4.0);
+        for s in &r.sections {
+            ui.add_enabled_ui(!searching, |ui| {
+                ui.selectable_value(&mut self.selected, s.id, s.title);
+            });
+        }
+        if let State::Loading(_, done) = &self.state {
+            ui.add_space(8.0);
+            for g in GROUPS.iter().filter(|g| !done.contains(g)) {
+                ui.label(
+                    RichText::new(format!("Loading {}\u{2026}", group_label(g)))
+                        .weak()
+                        .italics(),
+                );
+            }
+        }
+    }
+
+    fn main_panel(&self, ui: &mut egui::Ui, report: Option<&Report>, searching: bool) {
+        if let State::Failed(e) = &self.state {
+            ui.heading("Could not read this PC");
+            ui.label(e.as_str());
+            ui.label("Open a saved snapshot from the File menu, or report the problem from the Help menu.");
+            return;
+        }
+        self.loading_banner(ui);
+        let Some(r) = report else { return };
+        egui::ScrollArea::vertical()
+            .auto_shrink([false, false])
+            .show(ui, |ui| {
+                if searching {
+                    let found = r.filtered(&self.search, self.hide_private);
+                    if found.sections.is_empty() {
+                        ui.label("No matches.");
                     }
-                    ui.add_space(4.0);
-                    for (i, s) in r.sections.iter().enumerate() {
-                        ui.add_enabled_ui(!searching, |ui| {
-                            ui.selectable_value(&mut self.selected, i, s.title);
-                        });
+                    for s in &found.sections {
+                        section_view(ui, s, true);
+                        ui.add_space(12.0);
                     }
+                } else if let Some(s) = r.section(self.selected).or_else(|| r.sections.first()) {
+                    section_view(ui, s, false);
                 }
             });
-        egui::CentralPanel::default().show(ctx, |ui| match (&self.state, &report) {
-            (State::Loading(_), _) => {
-                ui.centered_and_justified(|ui| {
-                    ui.horizontal(|ui| {
-                        ui.spinner();
-                        ui.label("Reading your hardware\u{2026} this takes a few seconds.");
-                    });
-                });
-            }
-            (State::Failed(e), _) => {
-                ui.heading("Could not read this PC");
-                ui.label(e.as_str());
-                ui.label("Open a saved snapshot from the File menu, or report the problem from the Help menu.");
-            }
-            (State::Ready, Some(r)) => {
-                egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
-                    if searching {
-                        let found = r.filtered(&self.search, self.hide_private);
-                        if found.sections.is_empty() {
-                            ui.label("No matches.");
-                        }
-                        for s in &found.sections {
-                            section_view(ui, s, true);
-                            ui.add_space(12.0);
-                        }
-                    } else if let Some(s) = r.sections.get(self.selected).or_else(|| r.sections.first()) {
-                        section_view(ui, s, false);
-                    }
-                });
-            }
-            (State::Ready, None) => {
-                ui.label("Nothing to show.");
-            }
-        });
     }
 }
 
-fn start_collection() -> State {
+impl eframe::App for App {
+    fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
+        self.poll();
+        egui::Panel::top("menu").show(ui, |ui| {
+            self.menu_bar(ui);
+            self.toolbar(ui);
+            ui.add_space(2.0);
+        });
+        egui::Panel::bottom("status").show(ui, |ui| self.status_bar(ui));
+        if self.show_about {
+            self.about_window();
+        }
+        let report = self.current();
+        let searching = !self.search.trim().is_empty();
+        egui::Panel::left("sections")
+            .resizable(false)
+            .exact_size(210.0)
+            .show(ui, |ui| self.sections_panel(ui, report.as_ref(), searching));
+        egui::CentralPanel::default()
+            .show(ui, |ui| self.main_panel(ui, report.as_ref(), searching));
+        if self
+            .message
+            .as_ref()
+            .is_some_and(|(_, at)| at.elapsed() < Duration::from_secs(6))
+        {
+            self.ctx.request_repaint_after(Duration::from_millis(500));
+        }
+    }
+}
+
+/// Starts collection on a background thread. Each finished group is sent to
+/// the window, which repaints to show it.
+fn start_collection(ctx: &egui::Context) -> State {
     let (tx, rx) = mpsc::channel();
+    let ctx = ctx.clone();
     std::thread::spawn(move || {
-        // The receiver may be gone if the window closed; nothing to do then.
-        let _ = tx.send(collect().map_err(|e| e.to_string()));
+        let result = collect_with_progress(|snap, done| {
+            // The receiver may be gone if the window closed; nothing to do then.
+            let _ = tx.send(Msg::Progress(snap.clone(), done.to_vec()));
+            ctx.request_repaint();
+        });
+        let _ = tx.send(Msg::Done(result.map_err(|e| e.to_string())));
+        ctx.request_repaint();
     });
-    State::Loading(rx)
+    State::Loading(rx, Vec::new())
 }
 
 /// Opens a web page in the default browser. This is the only thing the app
