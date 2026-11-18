@@ -18,7 +18,7 @@ jobs:
     name: Formatting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       # rustup reads rust-toolchain.toml and installs the pinned toolchain.
       - run: rustup show active-toolchain || rustup toolchain install
       - run: cargo fmt --all --check
@@ -27,7 +27,7 @@ jobs:
     name: Windows (clippy, tests, live smoke test)
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: rustup show active-toolchain || rustup toolchain install
       - uses: Swatinem/rust-cache@v2
       - name: Clippy (maximum strictness)
@@ -56,7 +56,7 @@ jobs:
     name: Linux (core library, no GUI)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: rustup show active-toolchain || rustup toolchain install
       - uses: Swatinem/rust-cache@v2
       - name: Clippy (maximum strictness)
@@ -68,7 +68,7 @@ jobs:
     name: Licences and advisories
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       # Run on the runner (not the action's container) so the toolchain
       # pinned in rust-toolchain.toml is used.
       - run: rustup show active-toolchain || rustup toolchain install
