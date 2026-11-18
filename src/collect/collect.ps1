@@ -5,10 +5,17 @@
 # try/catch so one failure (for example, a class that needs administrator
 # rights) never blanks the whole report; failures are listed under "errors".
 #
+# Queries are split into groups (see $GroupOf) so the app can run several
+# copies of this script in parallel, one per group, and show each part of the
+# report as soon as it arrives. With no -Groups argument, every group runs.
+#
 # Contributors: you can paste any block below into a PowerShell window to see
 # exactly what it returns on your machine.
 
-param([Parameter(Mandatory = $true)][string]$OutFile)
+param(
+    [Parameter(Mandatory = $true)][string]$OutFile,
+    [string]$Groups = ''
+)
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
@@ -31,14 +38,40 @@ function Str($chars) {
     return (-join ($chars | Where-Object { $_ -ne 0 } | ForEach-Object { [char]$_ })).Trim()
 }
 
+$wanted = @(if ($Groups) { $Groups -split ',' })
+
+# Which group each query belongs to. Every query must be listed here.
+$GroupOf = @{
+    os = 'core'; windowsVersion = 'core'; computerSystem = 'core'; timeZone = 'core'; culture = 'core'
+    firmwareType = 'core'; processor = 'core'; physicalMemory = 'core'; memoryArray = 'core'
+    smbios = 'core'; baseBoard = 'core'; bios = 'core'; systemSlots = 'core'
+    uac = 'security'; antivirus = 'security'; firewall = 'security'; secureBoot = 'security'
+    tpm = 'security'; hotfixes = 'security'; runtimes = 'security'; powerPlan = 'security'
+    videoControllers = 'graphics'; gpuMemory = 'graphics'; monitors = 'graphics'; monitorParams = 'graphics'
+    diskDrives = 'storage'; physicalDisks = 'storage'; reliability = 'storage'; smartData = 'storage'
+    smartThresholds = 'storage'; smartStatus = 'storage'; partitions = 'storage'; logicalDisks = 'storage'
+    cdrom = 'storage'
+    soundDevices = 'devices'; audioEndpoints = 'devices'; keyboards = 'devices'; pointingDevices = 'devices'
+    printers = 'devices'; usbDevices = 'devices'; usbControllers = 'devices'; deviceProblems = 'devices'
+    drivers = 'drivers'
+    netAdapters = 'network'; ipConfig = 'network'; shares = 'network'; remoteDesktop = 'network'
+    proxy = 'network'; wlanInterfaces = 'network'
+}
+
+function Wanted([string]$name) {
+    return ($wanted.Count -eq 0) -or ($wanted -contains $GroupOf[$name])
+}
+
 # Runs a query and stores its results as an array under $name.
 function Q([string]$name, [scriptblock]$block) {
+    if (-not (Wanted $name)) { return }
     try { $out[$name] = @(& $block) }
     catch { [void]$errs.Add([ordered]@{ source = $name; message = $_.Exception.Message }) }
 }
 
 # Runs a query and stores a single value under $name.
 function One([string]$name, [scriptblock]$block) {
+    if (-not (Wanted $name)) { return }
     try { $out[$name] = (& $block) }
     catch { [void]$errs.Add([ordered]@{ source = $name; message = $_.Exception.Message }) }
 }
@@ -49,10 +82,11 @@ function RegValue([string]$path, [string]$name) {
 
 $out['schema'] = 1
 $out['collectedAt'] = (Get-Date).ToUniversalTime().ToString('o')
-One 'isAdmin' {
-    ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
+$out['groups'] = @(if ($wanted.Count -gt 0) { $wanted } else { $GroupOf.Values | Sort-Object -Unique })
+try {
+    $out['isAdmin'] = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
         [Security.Principal.WindowsBuiltInRole]::Administrator)
-}
+} catch { $out['isAdmin'] = $null }
 $out['psVersion'] = $PSVersionTable.PSVersion.ToString()
 
 # ---- Operating system -------------------------------------------------------

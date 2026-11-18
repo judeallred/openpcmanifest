@@ -1,8 +1,9 @@
 //! Raw data collection.
 //!
-//! On Windows, collection runs one embedded PowerShell script
-//! (`collect.ps1`) with the inbox Windows PowerShell 5.1 and reads back a
-//! single JSON document. CPUID is read directly in Rust. The result is a
+//! On Windows, collection runs the embedded PowerShell script
+//! (`collect.ps1`) with the inbox Windows PowerShell 5.1, once per query
+//! group and in parallel, and merges the JSON documents as they arrive.
+//! CPUID is read directly in Rust. The result is a
 //! [`Snapshot`], which can be saved and loaded so reports can be rebuilt,
 //! shared for bug reports and compared later.
 //!
@@ -101,58 +102,147 @@ impl Snapshot {
     pub fn collected_at(&self) -> Option<&str> {
         self.data.get("collectedAt").as_str()
     }
+}
 
-    fn set(&mut self, key: &str, value: Value) {
-        if let Value::Object(pairs) = &mut self.data {
-            pairs.retain(|(k, _)| !k.eq_ignore_ascii_case(key));
-            pairs.push((key.to_owned(), value));
+/// Query groups in `collect.ps1`, in the order their results are most
+/// useful. Each group runs in its own PowerShell process, in parallel.
+pub const GROUPS: [&str; 7] = [
+    "core", "graphics", "storage", "network", "devices", "security", "drivers",
+];
+
+/// Keys that every group's output repeats; the first value wins.
+const HEADER_KEYS: [&str; 4] = ["schema", "collectedAt", "isAdmin", "psVersion"];
+
+/// Merges one group's output into a snapshot document. Lists of errors and
+/// of completed groups are concatenated; header fields keep their first
+/// value; everything else is copied over.
+pub fn merge(into: &mut Value, part: Value) {
+    let Value::Object(target) = into else { return };
+    let Value::Object(pairs) = part else { return };
+    for (key, value) in pairs {
+        let existing = target
+            .iter_mut()
+            .find(|(k, _)| k.eq_ignore_ascii_case(&key));
+        match existing {
+            Some((_, Value::Array(list))) if key == "errors" || key == "groups" => {
+                list.extend(value.items().into_iter().cloned());
+            }
+            Some(_) if HEADER_KEYS.contains(&key.as_str()) => {}
+            Some((_, slot)) => *slot = value,
+            None => target.push((key, value)),
         }
     }
 }
 
+fn base_snapshot() -> Snapshot {
+    Snapshot {
+        data: Value::Object(vec![
+            ("schema".to_owned(), Value::Number(1.0)),
+            (
+                "collectedAt".to_owned(),
+                Value::String(crate::util::now_iso()),
+            ),
+            ("generator".to_owned(), Value::String(crate::build_string())),
+            (
+                "cpuid".to_owned(),
+                crate::cpu::to_json(&crate::cpu::read_local()),
+            ),
+            ("groups".to_owned(), Value::Array(Vec::new())),
+            ("errors".to_owned(), Value::Array(Vec::new())),
+        ]),
+    }
+}
+
+fn error_entry(source: &str, message: &str) -> Value {
+    Value::Object(vec![
+        ("source".to_owned(), Value::String(source.to_owned())),
+        ("message".to_owned(), Value::String(message.to_owned())),
+    ])
+}
+
 /// Collects a snapshot of the current machine.
-///
-/// On platforms other than Windows the snapshot holds only CPUID data and an
-/// error entry explaining that full collection needs Windows.
 ///
 /// # Errors
 ///
-/// Fails if PowerShell cannot be run or its output cannot be read.
+/// Fails if PowerShell cannot be run at all. Failures of individual query
+/// groups are recorded in the snapshot's `errors` list instead.
 pub fn collect() -> Result<Snapshot, CollectError> {
-    let mut snap = collect_platform()?;
-    snap.set("cpuid", crate::cpu::to_json(&crate::cpu::read_local()));
-    snap.set("generator", Value::String(crate::build_string()));
-    Ok(snap)
+    collect_with_progress(|_, _| {})
+}
+
+/// Collects a snapshot, calling `on_progress` with the merged snapshot so far
+/// and the groups finished so far: once before any group (CPU details only),
+/// then after each group completes.
+///
+/// # Errors
+///
+/// Fails if every group fails, for example because PowerShell is missing.
+pub fn collect_with_progress(
+    mut on_progress: impl FnMut(&Snapshot, &[&'static str]),
+) -> Result<Snapshot, CollectError> {
+    let mut snap = base_snapshot();
+    let mut done: Vec<&'static str> = Vec::new();
+    let mut first_error = None;
+    on_progress(&snap, &done);
+    run_groups(&mut |group, result| {
+        match result {
+            Ok(part) => merge(&mut snap.data, part),
+            Err(e) => {
+                merge(
+                    &mut snap.data,
+                    Value::Object(vec![(
+                        "errors".to_owned(),
+                        Value::Array(vec![error_entry(group, &e.to_string())]),
+                    )]),
+                );
+                first_error.get_or_insert(e);
+            }
+        }
+        done.push(group);
+        on_progress(&snap, &done);
+    })?;
+    let any_succeeded = snap
+        .data
+        .get("groups")
+        .items()
+        .iter()
+        .any(|g| g.as_str().is_some());
+    match first_error {
+        Some(e) if !any_succeeded && cfg!(windows) => Err(e),
+        _ => Ok(snap),
+    }
 }
 
 #[cfg(windows)]
-fn collect_platform() -> Result<Snapshot, CollectError> {
+fn powershell_path() -> std::path::PathBuf {
+    use std::path::PathBuf;
+    let root =
+        std::env::var_os("SystemRoot").map_or_else(|| PathBuf::from(r"C:\Windows"), PathBuf::from);
+    let tail = ["WindowsPowerShell", "v1.0", "powershell.exe"];
+    // A 32-bit build on 64-bit Windows sees the 32-bit System32; Sysnative
+    // reaches the real 64-bit PowerShell so registry and storage queries
+    // aren't redirected.
+    let sysnative = tail
+        .iter()
+        .fold(root.join("Sysnative"), |p, part| p.join(part));
+    if sysnative.exists() {
+        return sysnative;
+    }
+    // Always use the full path so a `powershell.exe` earlier on PATH is never run.
+    tail.iter()
+        .fold(root.join("System32"), |p, part| p.join(part))
+}
+
+#[cfg(windows)]
+fn run_group(script: &Path, dir: &Path, group: &str) -> Result<Value, CollectError> {
     use std::os::windows::process::CommandExt as _;
     use std::process::Command;
 
     /// Keeps PowerShell from flashing a console window when the GUI runs it.
     const CREATE_NO_WINDOW: u32 = 0x0800_0000;
 
-    let dir = std::env::temp_dir().join(format!("openpcmanifest-{}", std::process::id()));
-    std::fs::create_dir_all(&dir)?;
-    let script = dir.join("collect.ps1");
-    let out = dir.join("snapshot.json");
-    // A UTF-8 byte-order mark makes Windows PowerShell 5.1 read the script as
-    // UTF-8 rather than the system code page.
-    std::fs::write(&script, format!("\u{feff}{SCRIPT}"))?;
-
-    // Use the full path so a `powershell.exe` earlier on PATH is never run.
-    let powershell = std::env::var_os("SystemRoot").map_or_else(
-        || std::path::PathBuf::from("powershell.exe"),
-        |root| {
-            std::path::PathBuf::from(root)
-                .join("System32")
-                .join("WindowsPowerShell")
-                .join("v1.0")
-                .join("powershell.exe")
-        },
-    );
-    let result = Command::new(powershell)
+    let out = dir.join(format!("{group}.json"));
+    let output = Command::new(powershell_path())
         .args([
             "-NoLogo",
             "-NoProfile",
@@ -161,17 +251,15 @@ fn collect_platform() -> Result<Snapshot, CollectError> {
             "Bypass",
             "-File",
         ])
-        .arg(&script)
+        .arg(script)
         .arg("-OutFile")
         .arg(&out)
+        .arg("-Groups")
+        .arg(group)
         .creation_flags(CREATE_NO_WINDOW)
-        .output();
-    let text = std::fs::read_to_string(&out);
-    // Best effort: a leftover temp folder is harmless.
-    let _ = std::fs::remove_dir_all(&dir);
-
-    let output = result.map_err(|e| CollectError::PowerShell(format!("could not start: {e}")))?;
-    let text = text.map_err(|_| {
+        .output()
+        .map_err(|e| CollectError::PowerShell(format!("could not start: {e}")))?;
+    let text = std::fs::read_to_string(&out).map_err(|_| {
         let stderr = String::from_utf8_lossy(&output.stderr);
         CollectError::PowerShell(format!(
             "exit status {}; {}",
@@ -179,7 +267,39 @@ fn collect_platform() -> Result<Snapshot, CollectError> {
             stderr.lines().take(5).collect::<Vec<_>>().join(" ")
         ))
     })?;
-    Snapshot::from_json(&text)
+    Ok(json::parse(&text)?)
+}
+
+/// Runs every group in parallel and hands each result to `on_result` as it
+/// finishes.
+#[cfg(windows)]
+fn run_groups(
+    on_result: &mut dyn FnMut(&'static str, Result<Value, CollectError>),
+) -> Result<(), CollectError> {
+    let dir = std::env::temp_dir().join(format!("openpcmanifest-{}", std::process::id()));
+    std::fs::create_dir_all(&dir)?;
+    let script = dir.join("collect.ps1");
+    // A UTF-8 byte-order mark makes Windows PowerShell 5.1 read the script as
+    // UTF-8 rather than the system code page.
+    std::fs::write(&script, format!("\u{feff}{SCRIPT}"))?;
+    let (tx, rx) = std::sync::mpsc::channel();
+    std::thread::scope(|scope| {
+        for group in GROUPS {
+            let tx = tx.clone();
+            let (script, dir) = (&script, &dir);
+            scope.spawn(move || {
+                // The receiver outlives every sender inside this scope.
+                let _ = tx.send((group, run_group(script, dir, group)));
+            });
+        }
+        drop(tx);
+        for (group, result) in rx {
+            on_result(group, result);
+        }
+    });
+    // Best effort: a leftover temp folder is harmless.
+    let _ = std::fs::remove_dir_all(&dir);
+    Ok(())
 }
 
 #[cfg(not(windows))]
@@ -187,28 +307,17 @@ fn collect_platform() -> Result<Snapshot, CollectError> {
     clippy::unnecessary_wraps,
     reason = "same signature as the Windows implementation"
 )]
-fn collect_platform() -> Result<Snapshot, CollectError> {
-    let error = Value::Object(vec![
-        ("source".to_owned(), Value::String("platform".to_owned())),
-        (
-            "message".to_owned(),
-            Value::String(
-                "Full collection needs Windows. Only processor details were read; \
-                 use --from-raw to view a snapshot taken on Windows."
-                    .to_owned(),
-            ),
-        ),
-    ]);
-    Ok(Snapshot {
-        data: Value::Object(vec![
-            ("schema".to_owned(), Value::Number(1.0)),
-            (
-                "collectedAt".to_owned(),
-                Value::String(crate::util::now_iso()),
-            ),
-            ("errors".to_owned(), Value::Array(vec![error])),
-        ]),
-    })
+fn run_groups(
+    on_result: &mut dyn FnMut(&'static str, Result<Value, CollectError>),
+) -> Result<(), CollectError> {
+    let message = "Full collection needs Windows. Only processor details were read; \
+                   use --from-raw to view a snapshot taken on Windows.";
+    let part = Value::Object(vec![(
+        "errors".to_owned(),
+        Value::Array(vec![error_entry("platform", message)]),
+    )]);
+    on_result("platform", Ok(part));
+    Ok(())
 }
 
 #[cfg(test)]
@@ -217,7 +326,7 @@ mod tests {
 
     #[test]
     fn script_is_embedded_and_read_only() {
-        assert!(SCRIPT.contains("param([Parameter(Mandatory = $true)][string]$OutFile)"));
+        assert!(SCRIPT.contains("[Parameter(Mandatory = $true)][string]$OutFile"));
         for verb in [
             "Set-",
             "Remove-",
@@ -246,11 +355,52 @@ mod tests {
     }
 
     #[test]
+    fn merge_combines_groups() {
+        let mut snap = base_snapshot();
+        let a =
+            json::parse(r#"{"schema":1,"collectedAt":"A","groups":["core"],"os":[1],"errors":[]}"#)
+                .unwrap();
+        let b = json::parse(
+            r#"{"schema":1,"collectedAt":"B","groups":["storage"],"diskDrives":[2],"errors":[{"source":"smartData","message":"x"}]}"#,
+        )
+        .unwrap();
+        merge(&mut snap.data, a);
+        merge(&mut snap.data, b);
+        assert_eq!(snap.data.get("groups").items().len(), 2);
+        assert_eq!(snap.data.get("errors").items().len(), 1);
+        assert_eq!(snap.data.get("os").items().len(), 1);
+        assert_eq!(snap.data.get("diskDrives").items().len(), 1);
+        assert_ne!(
+            snap.data.get("collectedAt").as_str(),
+            Some("B"),
+            "header keeps its first value"
+        );
+    }
+
+    #[test]
+    fn progress_is_reported() {
+        let mut calls = 0;
+        let snap = collect_with_progress(|_, _| calls += 1).unwrap();
+        assert!(calls >= 2, "once up front and once per group");
+        assert!(snap.data.get("schema").as_u64().is_some());
+    }
+
+    #[test]
+    fn script_lists_every_group() {
+        for g in GROUPS {
+            assert!(
+                SCRIPT.contains(&format!("'{g}'")),
+                "group {g} missing from collect.ps1"
+            );
+        }
+    }
+
+    #[test]
     fn collect_always_includes_cpuid_and_generator() {
         let snap = collect().unwrap();
         assert!(snap.data.get("schema").as_u64().is_some());
         assert!(snap.data.get("generator").as_str().is_some());
-        if cfg!(target_arch = "x86_64") {
+        if cfg!(any(target_arch = "x86", target_arch = "x86_64")) {
             assert!(!snap.data.get("cpuid").items().is_empty());
         }
     }

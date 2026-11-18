@@ -2,9 +2,9 @@
 
 [graph]
 all-features = true
-# The only binary we ship is the Windows x64 exe. Linux builds use
+# We ship only Windows exes (x64 and x86). Linux builds use
 # --no-default-features and have no dependencies at all.
-targets = ["x86_64-pc-windows-msvc"]
+targets = ["x86_64-pc-windows-msvc", "i686-pc-windows-msvc"]
 
 [advisories]
 version = 2

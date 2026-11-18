@@ -1,8 +1,8 @@
 name: Nightly
 
-# Builds the Windows exe on every push to main (and once a day) and replaces
-# the rolling "nightly" pre-release. Each nightly is labelled with the crate
-# version plus a build stamp, for example:
+# Builds 64-bit and 32-bit Windows exes on every push to main (and once a
+# day) and replaces the rolling "nightly" pre-release. Each nightly is
+# labelled with the crate version plus a build stamp, for example:
 #   0.1.0-nightly.20261115.42+1a2b3c4
 
 on:
@@ -23,60 +23,85 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  nightly:
+  stamp:
+    runs-on: ubuntu-latest
+    outputs:
+      build: ${{ steps.stamp.outputs.build }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: stamp
+        run: |
+          version=$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2)
+          build="$version-nightly.$(date -u +%Y%m%d).${{ github.run_number }}+${GITHUB_SHA::7}"
+          echo "build=$build" >> "$GITHUB_OUTPUT"
+          echo "Build: $build"
+
+  build:
+    needs: stamp
     runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - arch: x64
+            target: x86_64-pc-windows-msvc
+          - arch: x86
+            target: i686-pc-windows-msvc
     steps:
       - uses: actions/checkout@v7
       - run: rustup show active-toolchain || rustup toolchain install
+      - run: rustup target add ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
-
-      - name: Compute the build stamp
-        id: stamp
-        shell: pwsh
-        run: |
-          $version = (cargo metadata --no-deps --format-version 1 | ConvertFrom-Json).packages[0].version
-          $date = (Get-Date).ToUniversalTime().ToString('yyyyMMdd')
-          $sha = '${{ github.sha }}'.Substring(0, 7)
-          $build = "$version-nightly.$date.${{ github.run_number }}+$sha"
-          "build=$build" >> $env:GITHUB_OUTPUT
-          Write-Host "Build: $build"
-
+        with:
+          key: ${{ matrix.target }}
       - name: Build
         env:
-          OPM_BUILD: ${{ steps.stamp.outputs.build }}
-        run: cargo build --release
-
+          OPM_BUILD: ${{ needs.stamp.outputs.build }}
+        run: cargo build --release --target ${{ matrix.target }}
       - name: Package
         shell: pwsh
         run: |
+          $name = 'openpcmanifest-nightly-windows-${{ matrix.arch }}'
           New-Item -ItemType Directory -Force dist | Out-Null
-          Copy-Item target/release/openpcmanifest.exe dist/
+          Copy-Item target/${{ matrix.target }}/release/openpcmanifest.exe dist/
           Copy-Item LICENSE, README.md dist/
-          Compress-Archive -Path dist/* -DestinationPath openpcmanifest-nightly-windows-x64.zip -Force
-          Copy-Item target/release/openpcmanifest.exe openpcmanifest-nightly-windows-x64.exe
-          $files = 'openpcmanifest-nightly-windows-x64.zip', 'openpcmanifest-nightly-windows-x64.exe'
-          $files | ForEach-Object {
-            "$((Get-FileHash $_ -Algorithm SHA256).Hash.ToLower())  $_"
-          } | Set-Content -Encoding ascii SHA256SUMS.txt
+          Compress-Archive -Path dist/* -DestinationPath "$name.zip" -Force
+          Copy-Item target/${{ matrix.target }}/release/openpcmanifest.exe "$name.exe"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: nightly-${{ matrix.arch }}
+          path: openpcmanifest-nightly-windows-*
 
+  publish:
+    needs: [stamp, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: nightly-*
+          merge-multiple: true
+      - name: Checksums
+        run: sha256sum openpcmanifest-nightly-windows-* > SHA256SUMS.txt && cat SHA256SUMS.txt
       - name: Replace the nightly pre-release
-        shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-          BUILD: ${{ steps.stamp.outputs.build }}
+          GH_REPO: ${{ github.repository }}
+          BUILD: ${{ needs.stamp.outputs.build }}
         run: |
-          gh release delete nightly --cleanup-tag --yes 2>$null
-          $notes = @"
-          Automated build of ``main`` at ${{ github.sha }}.
+          gh release delete nightly --cleanup-tag --yes || true
+          cat > notes.md <<EOF
+          Automated build of \`main\` at ${{ github.sha }}.
 
-          **Build:** $env:BUILD
+          **Build:** $BUILD
+
+          - \`x64\`: 64-bit Windows (most PCs).
+          - \`x86\`: 32-bit Windows, for older machines.
 
           Nightly builds are untested and unsigned. Windows SmartScreen may warn on first run;
           choose *More info* then *Run anyway*. For a stable version, use the latest tagged release.
-          "@
-          gh release create nightly `
-            --prerelease `
-            --target ${{ github.sha }} `
-            --title "Nightly $env:BUILD" `
-            --notes $notes `
-            openpcmanifest-nightly-windows-x64.zip openpcmanifest-nightly-windows-x64.exe SHA256SUMS.txt
+          EOF
+          gh release create nightly \
+            --prerelease \
+            --target ${{ github.sha }} \
+            --title "Nightly $BUILD" \
+            --notes-file notes.md \
+            openpcmanifest-nightly-windows-* SHA256SUMS.txt
